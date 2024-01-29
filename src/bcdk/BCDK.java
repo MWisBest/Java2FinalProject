@@ -2,8 +2,12 @@ package bcdk;
 
 import java.util.Scanner;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public class BCDK {
 	public static boolean RUNNING = true;
+	public static Logger logger = LogManager.getLogger(BCDK.class);
 	
 	/**
 	 * Takes user input and attempts to process it.
@@ -14,6 +18,7 @@ public class BCDK {
 	private static String parseInput(String in) {
 		// double-check that the input is all uppercase, and remove any extra whitespace
 		in = in.toUpperCase().strip();
+		logger.debug("Got command: " + in);
 		
 		String[] input = in.split(" ");
 		
@@ -87,6 +92,7 @@ public class BCDK {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			System.out.println("Thank you for playing!");
 		}
