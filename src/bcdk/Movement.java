@@ -54,7 +54,7 @@ public class Movement {
 				if(m.IsMovementValid(findMe[0]++, findMe[1])) {
 					
 					// combine code to send to story to see message it should return
-					 index = gm.GetMessage(Integer.toString(findMe[0]++) + Integer.toString(findMe[1]) + SetDirectionMessage(findMe[0]++, findMe[1]));
+					 index = gm.GetMessage(Integer.toString(findMe[0]++) + Integer.toString(findMe[1]) + SetDirectionMessage(findMe[0]++, findMe[1], Direction));
 					 
 						// if its valid move in that direction 
 						findMe[0] = findMe[0]++;
@@ -66,7 +66,7 @@ public class Movement {
 				if(m.IsMovementValid(findMe[0]-- , findMe[1])) {
 
 					//getting story message to send to user
-					index = gm.GetMessage(Integer.toString(findMe[0]--) + Integer.toString(findMe[1]) + SetDirectionMessage(findMe[0]--, findMe[1]));
+					index = gm.GetMessage(Integer.toString(findMe[0]--) + Integer.toString(findMe[1]) + SetDirectionMessage(findMe[0]--, findMe[1], Direction));
 					
 					// updating position
 					findMe[0] = findMe[0]--;
@@ -79,7 +79,7 @@ public class Movement {
 				if(m.IsMovementValid(findMe[0], findMe[1]--)) {
 
 					// getting story mission
-					index = gm.GetMessage(Integer.toString(findMe[0]) + Integer.toString(findMe[1]--) + SetDirectionMessage(findMe[0], findMe[1]--));
+					index = gm.GetMessage(Integer.toString(findMe[0]) + Integer.toString(findMe[1]--) + SetDirectionMessage(findMe[0], findMe[1]--, Direction));
 									
 					// updating position
 					findMe[1] = findMe[1]--;
@@ -91,7 +91,7 @@ public class Movement {
 				if(m.IsMovementValid(findMe[0], findMe[1]++)) {
 					
 					// getting story message
-					index = gm.GetMessage(Integer.toString(findMe[0]) + Integer.toString(findMe[1]++) + SetDirectionMessage(findMe[0], findMe[1]++));
+					index = gm.GetMessage(Integer.toString(findMe[0]) + Integer.toString(findMe[1]++) + SetDirectionMessage(findMe[0], findMe[1]++, Direction));
 					
 					// updating position
 					findMe[1] = findMe[1]++;
@@ -108,7 +108,7 @@ public class Movement {
 	}
 	
 	// testing to see if we are coming back to reference point or moving away from it
-	private String SetDirectionMessage(int row, int col) {
+	private String SetDirectionMessage(int row, int col, String direction) {
 		
 		// setting up string to pass
 		String mess = "F";
@@ -137,17 +137,19 @@ public class Movement {
 			// finding the difference from new point
 			int newRow = row - refPoints[UsingRefPoint][0];
 			int newCol = col - refPoints[UsingRefPoint][1];
-		
-		
-			//if(difFindMeRow > 0) {
 			
-			//} else if(difFindMeRow < 0){
+			if(direction == "North" && difFindMeRow < newRow) {
+				mess = "B";
+			} else if(direction == "South" && difFindMeRow > newRow) {
+				mess = "B";
+			}else if(direction == "West" && difFindMeColumn < newCol) {
+				mess = "B";
+			}else if(direction == "East" && difFindMeColumn > newCol) {
+				mess = "B";
+			}
+		
+		
 			
-			//} else if(difFindMeColumn > 0){
-		
-			//} else {
-		
-			//}
 		}
 		
 		return mess;
