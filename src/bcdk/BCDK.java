@@ -30,6 +30,7 @@ public class BCDK {
 		StringBuilder ret = new StringBuilder();
 		
 		// Note: switch statements use String.equals, not ==, so this is fine
+		//Should add a Grab or Pickup command, maybe under LOOK case?
 		switch(input[0]) {
 		case "QUIT":
 			RUNNING = false;
@@ -39,6 +40,7 @@ public class BCDK {
 			break;
 		// further examples/ideas
 		case "GO":
+		case "MOVE":
 			
 			switch(input[1]) {
 			case "NORTH":
@@ -55,8 +57,31 @@ public class BCDK {
 			break;
 		case "LOOK":
 			break;
-		case "INVENTORY":
+			
+		case "INVENTORY": 
 		case "I":
+			switch(input[1]) {
+			case "USE":
+					switch(input[2]) {
+					case "KEY":
+					key1.UseKey(); //For now placeholder text. In future if used next to locked door, then opens that door.
+					break;
+					case "ROCK":
+					PlayerRocks.Throw(); //For now placeholder text.  In future could do USE ROCK *DIRECTION* or have a FACE *Direction* and throw rock forward 
+					break;
+					}
+					break;
+				case "EXAMINE":
+					switch(input[2]) {
+					case "KEY":
+					key1.WhatKey(); //Tell user what key looks like, Placeholder description until map is fully designed
+					break;
+					case "ROCK":
+					PlayerRocks.WhatRocks(); //Tell player how many rocks they have
+					break;
+				}
+			
+			}
 			break;
 		case "A":
 		case "ATTACK":
@@ -67,10 +92,16 @@ public class BCDK {
 		}
 		return ret.toString();
 	}
+	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
+	static Items.Key key1=new Items.Key(); 
+	static Items.Rocks PlayerRocks=new Items.Rocks(); 
 
-	// main method
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to BCDK.");
+		
+		//Load Items for player
+		
 		
 		// TODO: Print some sort of introduction about the game?
 		
