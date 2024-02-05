@@ -95,6 +95,8 @@ public class BCDK {
 	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
 	static Items.Key key1=new Items.Key(); 
 	static Items.Rocks PlayerRocks=new Items.Rocks(); 
+
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to BCDK.");
 		
