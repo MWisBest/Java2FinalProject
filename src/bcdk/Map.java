@@ -1,21 +1,28 @@
 package bcdk;
 
 public class Map {
-
+	
 	// just a boolean array holding values for valid spots to move on map
-	private boolean[][] gameMap = {{false, false, false, false, true, false, true, false, true, true, true},
+	private final boolean[][] gameMap = {{false, false, false, false, true, false, true, false, true, true, true},
 									{false, false, false, false, true, false, true, false, true, false, true},
 									{true, true, true, true, true, true, true, true, true, false, true},
 									{false, false, false, false, true, false, false, false, true, false, true},
 									{false, false, false, true, true, false, false, false, true, true, true}};
 	
+	private Map() {};
+	private static final Map instance = new Map();
+	
+	public static Map getInstance() {
+		return instance;
+	}
+	
 	// variables to hold starting point set up in this class to hold the ability to possibly dynamically call it with database
-	private int startRow = 4;
-	private int startCol = 3;
+	private final int startRow = 4;
+	private final int startCol = 3;
 	
 	// this will call the place on the map movement is attempting to go too
 	// will return false if not found
-	public boolean IsMovementValid(int a, int b) {
+	public synchronized boolean IsMovementValid(int a, int b) {
 		
 		// exception handling if bound goes outside of the array
 		try {
@@ -31,12 +38,12 @@ public class Map {
 	//methods to call starting point on map
 	
 	// method to get starting row
-	public int GetStartRow() {
+	public synchronized int GetStartRow() {
 		return startRow;
 	}
 	
 	// method to get starting column
-	public int GetStartCol() {
+	public synchronized int GetStartCol() {
 		return startCol;
 	}
 }
