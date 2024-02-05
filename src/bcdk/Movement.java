@@ -12,6 +12,7 @@ public class Movement {
 	// setting up object for class to pull up the right story message to feed back to player and to update as story progresses
 	private GameMessages gm = new GameMessages();
 	
+	
 	// constructor just to setup start position
 	public Movement() {
 		SetStartingPosition();
@@ -20,7 +21,7 @@ public class Movement {
 	private void SetStartingPosition() {
 
 		// getting starting position for spot on map
-		Map m = new Map();
+		Map m = Map.getInstance();
 		// setting starting spots on array
 		findMe[0] = m.GetStartRow();
 		findMe[1] = m.GetStartCol();
@@ -41,7 +42,7 @@ public class Movement {
 	public String UpdatePostion(String Direction) {
 		
 		// calling the map to test if movement is possible
-		Map m = new Map();
+		Map m = Map.getInstance();
 		
 		// setting up index to return after testing and if testing fails sending movement is invalid
 		String index = "Invalid Movement";
