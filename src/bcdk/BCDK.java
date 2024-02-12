@@ -3,11 +3,16 @@ package bcdk;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
+
+import bcdk.Items.Key;
+import bcdk.Items.Rocks;
+
 import org.apache.logging.log4j.LogManager;
 
 public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
+	public static Inventory Inv = new Inventory();
 	
 	/**
 	 * Takes user input and attempts to process it.
@@ -71,15 +76,23 @@ public class BCDK {
 					break;
 					}
 					break;
-				case "EXAMINE":
+					
+			case "EXAMINE":
 					switch(input[2]) {
 					case "KEY":
+						Inv.addKey(key1); // temporary line. checks that inventory works as intended
 					key1.WhatKey(); //Tell user what key looks like, Placeholder description until map is fully designed
 					break;
 					case "ROCK":
+						Inv.addRocks(PlayerRocks); // temporary line. checks that inventory works as intended 
 					PlayerRocks.WhatRocks(); //Tell player how many rocks they have
 					break;
-				}
+					}
+					break;
+					
+			case "CHECK":
+				Inv.displayKeys();
+				Inv.displayRocks();
 			
 			}
 			break;
@@ -92,6 +105,7 @@ public class BCDK {
 		}
 		return ret.toString();
 	}
+	
 	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
 	static Items.Key key1=new Items.Key(); 
 	static Items.Rocks PlayerRocks=new Items.Rocks(); 
