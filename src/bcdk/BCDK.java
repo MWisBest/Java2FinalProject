@@ -3,16 +3,17 @@ package bcdk;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
-
-import bcdk.Items.Key;
-import bcdk.Items.Rocks;
-
 import org.apache.logging.log4j.LogManager;
 
 public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
-	public static Inventory Inv = new Inventory();
+	
+	//Items
+	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
+	static Items.Key key1=new Items.Key();  //Create Key object
+	static Items.Rocks PlayerRocks=new Items.Rocks(); 
+
 	
 	/**
 	 * Takes user input and attempts to process it.
@@ -63,8 +64,30 @@ public class BCDK {
 		case "LOOK":
 			break;
 			
+		//Adding items to inventory
+			//Need to remove the item from game world 
+			// player grabs key, then if they look in the room there is no more key. Same for Rock
+			//Only allow grab to be run one time per room? and once item is grabbed just say room has nothing of note
+		case "PICKUP":
+		case "P":
+		case "GRAB":
+		case "G":
+			switch(input[1]) {
+			case "KEY":
+				key1.HaveKey=true; 
+				//Add key into inventory
+				break;
+			case "ROCK":
+				PlayerRocks.RockCount++;
+				//Update RockCount and write that into inventory
+				break;
+			}
+			break;	
+			
+		//Actions that relate to player inventory
 		case "INVENTORY": 
 		case "I":
+			//Use items that are in inventory
 			switch(input[1]) {
 			case "USE":
 					switch(input[2]) {
@@ -72,30 +95,43 @@ public class BCDK {
 					key1.UseKey(); //For now placeholder text. In future if used next to locked door, then opens that door.
 					break;
 					case "ROCK":
-					PlayerRocks.Throw(); //For now placeholder text.  In future could do USE ROCK *DIRECTION* or have a FACE *Direction* and throw rock forward 
+					case "ROCKS"://Throw rock in that direction, add thing that calls AI to it. If there is no room in that direction just throw rock against wall, alert AI to player location
+						switch(input[3]) {
+						case "NORTH":
+							PlayerRocks.Throw("north");
+							break;
+						case "SOUTH":
+							PlayerRocks.Throw("south"); 
+							break;
+						case "WEST":
+							PlayerRocks.Throw("west"); 
+							break;
+						case "EAST":
+							PlayerRocks.Throw("east"); 
+							break;
+						default:
+							break;
+						}
+					
 					break;
 					}
 					break;
-					
-			case "EXAMINE":
+				//Look at items that are in inventory	
+				case "EXAMINE":
 					switch(input[2]) {
 					case "KEY":
-						Inv.addKey(key1); // temporary line. checks that inventory works as intended
 					key1.WhatKey(); //Tell user what key looks like, Placeholder description until map is fully designed
 					break;
 					case "ROCK":
-						Inv.addRocks(PlayerRocks); // temporary line. checks that inventory works as intended 
+					case "ROCKS":
 					PlayerRocks.WhatRocks(); //Tell player how many rocks they have
 					break;
-					}
-					break;
-					
-			case "CHECK":
-				Inv.displayKeys();
-				Inv.displayRocks();
+				}
 			
 			}
 			break;
+			
+		//Combat 	
 		case "A":
 		case "ATTACK":
 			break;
@@ -105,11 +141,6 @@ public class BCDK {
 		}
 		return ret.toString();
 	}
-	
-	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
-	static Items.Key key1=new Items.Key(); 
-	static Items.Rocks PlayerRocks=new Items.Rocks(); 
-
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to BCDK.");
