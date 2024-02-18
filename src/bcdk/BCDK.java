@@ -2,13 +2,19 @@ package bcdk;
 
 import java.util.Scanner;
 
+import java.sql.*;
+
+
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
-	
+
+	public static Connection dbConnection = null;
+
 	//Items
 	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
 	static Items.Key key1=new Items.Key();  //Create Key object
@@ -151,6 +157,13 @@ public class BCDK {
 		// TODO: Print some sort of introduction about the game?
 		
 		try(Scanner scanner = new Scanner(System.in)) {
+			try {
+				dbConnection = DriverManager.getConnection("jdbc:sqlite:bcdk.db");
+			} catch(SQLException e) {
+				e.printStackTrace();
+				logger.error(e);
+			}
+
 			while(RUNNING) {
 				System.out.print("> ");
 				
@@ -171,6 +184,14 @@ public class BCDK {
 			logger.error(e);
 		} finally {
 			System.out.println("Thank you for playing!");
+			try {
+				if(dbConnection != null) {
+					dbConnection.close();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+				logger.error(e);
+			}
 		}
 	}
 }
