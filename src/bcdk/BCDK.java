@@ -1,10 +1,7 @@
 package bcdk;
 
+import java.sql.SQLException;
 import java.util.Scanner;
-
-import java.sql.*;
-
-
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +10,7 @@ public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
 
-	public static Connection dbConnection = null;
+	public static SaveGame savegame = null;
 
 	//Items
 	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
@@ -141,6 +138,19 @@ public class BCDK {
 		case "A":
 		case "ATTACK":
 			break;
+		case "SAVE":
+			ret.append("Saving is automatically done when you reach a checkpoint.");
+			break;
+		case "LOAD":
+			// TODO: Load saved games, both on command and on game start
+			break;
+		case "RESTART":
+			if(input.length == 2 && input[1].equals("PLEASE")) {
+				// TODO: Actually clear save data and restart the game.
+				ret.append("Clearing save data and restarting the game!");
+			} else {
+				ret.append("Usage: RESTART PLEASE. Clears your saved data and restarts the game.");
+			}
 		default:
 			ret.append("Unknown command: ").append(in);
 			break;
@@ -158,10 +168,12 @@ public class BCDK {
 		
 		try(Scanner scanner = new Scanner(System.in)) {
 			try {
-				dbConnection = DriverManager.getConnection("jdbc:sqlite:bcdk.db");
+				savegame = new SaveGame("bcdk");
 			} catch(SQLException e) {
 				e.printStackTrace();
 				logger.error(e);
+				System.out.println("Error initializing savegame data. Saving will be unavailable.");
+				savegame = null;
 			}
 
 			while(RUNNING) {
@@ -176,8 +188,6 @@ public class BCDK {
 				if(!output.isBlank()) {
 					System.out.println(output);
 				}
-				
-				// TODO: implement an auto-save after each command?
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -185,10 +195,10 @@ public class BCDK {
 		} finally {
 			System.out.println("Thank you for playing!");
 			try {
-				if(dbConnection != null) {
-					dbConnection.close();
+				if(savegame != null) {
+					savegame.close();
 				}
-			} catch(SQLException e) {
+			} catch(Exception e) {
 				e.printStackTrace();
 				logger.error(e);
 			}
