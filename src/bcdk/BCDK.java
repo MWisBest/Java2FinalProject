@@ -132,8 +132,19 @@ public class BCDK {
 			break;
 			
 		//Combat 	
-		case "A":
-		case "ATTACK":
+		case "F":
+		case "FIGHT":
+			Entities player = new Entities("Player", 100, 20);
+			Entities npc = new Entities("Enemy", 100, 0);
+			Combat fight = new Combat(player, npc);
+			Entities winner = fight.FightWinner();
+			if(winner.getName().equals(player.getName())) {
+				System.out.println("Battle ended");
+				winner = null;
+			} else {
+				System.out.println("Player is dead");
+				RUNNING = false;
+			}
 			break;
 		default:
 			ret.append("Unknown command: ").append(in);
