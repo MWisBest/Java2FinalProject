@@ -3,6 +3,9 @@ package bcdk;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
+
+import bcdk.Items.Weapons;
+
 import org.apache.logging.log4j.LogManager;
 
 public class BCDK {
@@ -10,10 +13,13 @@ public class BCDK {
 	public static Logger logger = LogManager.getLogger(BCDK.class);
 	
 	//Items
-	//Create items for testing, At the moment Just tells player that the item they use does not exsist if they try to use it without finding it in the game
+	//Create items for testing, At the moment Just tells player that the item they use does not exist if they try to use it without finding it in the game
 	static Items.Key key1=new Items.Key();  //Create Key object
 	static Items.Rocks PlayerRocks=new Items.Rocks(); 
-
+	static Weapons mace = new Items().new Weapons("Mace", "A sturdy mace, someone must have gotten careless and left this out.", 5);
+	
+	//Inventory Creation
+	static Inventory PlayerInventory=new Inventory();
 	
 	/**
 	 * Takes user input and attempts to process it.
@@ -74,12 +80,17 @@ public class BCDK {
 		case "G":
 			switch(input[1]) {
 			case "KEY":
-				key1.HaveKey=true; 
+				key1.KeyCount++;
+				PlayerInventory.addKey(key1);
 				//Add key into inventory
 				break;
 			case "ROCK":
 				PlayerRocks.RockCount++;
+				PlayerInventory.addRocks(PlayerRocks);
 				//Update RockCount and write that into inventory
+				break;
+			case "MACE":
+				PlayerInventory.addWeapons(mace);
 				break;
 			}
 			break;	
@@ -120,12 +131,15 @@ public class BCDK {
 				case "EXAMINE":
 					switch(input[2]) {
 					case "KEY":
-					key1.WhatKey(); //Tell user what key looks like, Placeholder description until map is fully designed
+					PlayerInventory.displayKeys();
 					break;
 					case "ROCK":
 					case "ROCKS":
-					PlayerRocks.WhatRocks(); //Tell player how many rocks they have
+					PlayerInventory.displayRocks();  //Tell player how many rocks they have
 					break;
+					case "WEAPON":
+					case "WEAPONS":
+					PlayerInventory.displayWeapons();
 				}
 			
 			}
@@ -145,9 +159,9 @@ public class BCDK {
 	public static void main(String[] args) {
 		System.out.println("Welcome to BCDK.");
 		
-		//Load Items for player
+
 		
-		
+		PlayerRocks.RockCount=0;
 		// TODO: Print some sort of introduction about the game?
 		
 		try(Scanner scanner = new Scanner(System.in)) {
