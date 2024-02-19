@@ -6,63 +6,91 @@ import java.util.List;
 
 import bcdk.Items.Key;
 import bcdk.Items.Rocks;
+import bcdk.Items.Weapons;
 
 public class Inventory {
 	
 	// the Lists that will store all the player items 
 	private List<Key> keys;
 	private List<Rocks> rocks;
+	private List<Weapons> weapons;
 	
 	/**
-	 * class constructor to initialize the player inventory
+	 * class constructor
 	 */
 	public Inventory() {
 		this.keys = new ArrayList<>();
         this.rocks = new ArrayList<>();
+        this.weapons=new ArrayList<>();
 	}
 	
 
 	/**
-	 * indentifies the key to be added
-	 * @param key - the name of the key
+	 * 
+	 * @param key
 	 */
 	 public void addKey(Key key) {
 		 keys.add(key);
 	 }
 
 	 /**
-	  * indentifies and removes a key from the player inventory
-	  * @param key - the key to be removed
+	  * 
+	  * @param key
 	  */
 	 public void removeKey(Key key) {
 		 keys.remove(key);
 	 }
 	
 	 /**
-	  * adds more rocks to the player inventory
-	  * @param rocks - the name of the Rocks instance
+	  * 
+	  * @param rocks
 	  */
 	 public void addRocks(Rocks rocks) {
 		 this.rocks.add(rocks);
 	 }
 
 	 /**
-	  * identifies and removes a rock from the player inventory
-	  * @param rocks -  the name of the rock instance to be removed from the player inventory
+	  * 
+	  * @param rocks
 	  */
 	 public void removeRocks(Rocks rocks) {
 		 this.rocks.remove(rocks);
 	 }
 	 
+	 /**
+	  * 
+	  * @param weapons
+	  */
+	 public void addWeapons(Weapons weapons) {
+		 this.weapons.add(weapons);
+	 }
+
+	 /**
+	  * 
+	  * @param weapons
+	  */
+	 public void removeWeapons(Weapons weapons) {
+		 this.weapons.remove(weapons);
+	 }
+	 
+	 
 	/**
-	 * Method to display all the keys found in the player inventory
+	 * Modified so returns amount of keys once
 	 */
 	 public void displayKeys() {
+		 int PlaceholderKey=0;
 	        System.out.println("Keys in Inventory:");
 	        if(!keys.isEmpty()) {
 	        	for (Key key : keys) {
-	            System.out.println("- " + key.KeyDescription);
+	        		PlaceholderKey=key.KeyCount;
 	        	}
+	        		if (PlaceholderKey>1) {
+	                	System.out.println("You have " + PlaceholderKey + " iron keys left");
+	                }
+	                else
+	                {
+	                	System.out.println("You have " + PlaceholderKey + " iron key left");
+	                }
 	        } else {
 	        	System.out.println("You do not own any keys");
 	        }
@@ -70,18 +98,43 @@ public class Inventory {
 	 }
 	 
 	 /**
-	  * Method to display all the rocks found in the player inventory
+	  * Modified so should only print Rock amount once
 	  */
 	 public void displayRocks() {
+		 int PlaceholderRock = 0;
 	        System.out.println("Rocks in Inventory:");
 	        if(!rocks.isEmpty()) {
 	        	for (Rocks rock : rocks) {
-	            System.out.println("- " + rock.RockCount + " rocks left");
+	        		PlaceholderRock=rock.RockCount;
 	        	}
+	        		if (PlaceholderRock>1) {
+	                	System.out.println("You have " + PlaceholderRock + " more rocks left");
+	                }
+	                else
+	                {
+	                	System.out.println("You have " + PlaceholderRock + " more rock left");
+	                }
+	        	
 	        } else {
 	        	System.out.println("You do not have any rocks");
 	        }
 	        
 	    }
+	 
+	 /**
+	  * Says description for each weapon in inventory. Currently only a mace.
+	  */
+	 public void displayWeapons() {
+	        System.out.println("Weapons in inventory");
+	        if(!weapons.isEmpty()) {
+	        	for (Weapons weapon : weapons) {
+	        	System.out.println(weapon.getWeaponName()+": "+weapon.getWeaponDescription());
+	        	}	        	
+	        } else {
+	        	System.out.println("Nothing but your fists");
+	        }
+	        
+	    }
+	 
 	
 }
