@@ -151,7 +151,7 @@ public class BCDK {
 		//Combat 	
 		case "F":
 		case "FIGHT":
-			Entities player = new Entities("Player", 100, 20);
+			/*Entities player = new Entities("Player", 100, 20);
 			Entities npc = new Entities("Enemy", 100, 0);
 			Combat fight = new Combat(player, npc);
 			Entities winner = fight.FightWinner();
@@ -161,7 +161,7 @@ public class BCDK {
 			} else {
 				System.out.println("Player is dead");
 				RUNNING = false;
-			}
+			}*/
 			break;
 		case "SAVE":
 			ret.append("Saving is automatically done when you reach a checkpoint.");
@@ -199,6 +199,9 @@ public class BCDK {
 				logger.error(e);
 				System.out.println("Error initializing savegame data. Saving will be unavailable.");
 				savegame = null;
+			} catch(SaveGame.VersionMismatchException e) {
+				System.out.println("Your previous savegame uses an old format that is not compatible with this version, your progress was reset.");
+				logger.warn(e);
 			}
 
 			while(RUNNING) {
