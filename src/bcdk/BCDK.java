@@ -186,7 +186,12 @@ public class BCDK {
 	public static void main(String[] args) {
 		System.out.println("Welcome to BCDK.");
 		
-
+		//Get the map
+		Map map=Map.getInstance();
+		//create guard with 10 health that uses current map
+		//Can be moved have health changed with methods
+		NPCBehavior guard1=new NPCBehavior(map,10);
+		
 		
 		PlayerRocks.RockCount=0;
 		// TODO: Print some sort of introduction about the game?
