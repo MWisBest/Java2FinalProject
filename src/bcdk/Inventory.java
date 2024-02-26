@@ -127,14 +127,30 @@ public class Inventory {
 	 public void displayWeapons() {
 	        System.out.println("Weapons in inventory");
 	        if(!weapons.isEmpty()) {
+	        	int count = 1;
 	        	for (Weapons weapon : weapons) {
-	        	System.out.println(weapon.getWeaponName()+": "+weapon.getWeaponDescription());
+	        	System.out.println(count +": "+ weapon.getWeaponName()+": "+weapon.getWeaponDescription());
+	        	count++;
 	        	}	        	
 	        } else {
-	        	System.out.println("Nothing but your fists");
+	        	System.out.println("Nothing but your fists\n");
 	        }
 	        
 	    }
+	 
+	 public int WeaponCount() {
+		 int count = 0;
+		 if(!weapons.isEmpty()) {
+	        	for (Weapons weapon : weapons) {
+	        	count++;
+	        	}	        	
+	        }
+		 return count;
+	 }
+	 
+	 public ArrayList<Weapons> GetWapons() {
+		 return (ArrayList<Weapons>) weapons;
+	 }
 	 
 	
 }

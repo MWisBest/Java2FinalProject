@@ -12,14 +12,16 @@ import org.apache.logging.log4j.LogManager;
 public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
-
+	static Player player = new Player("Player", 100, 0);
 	public static SaveGame savegame = null;
 
 	//Items
 	//Create items for testing, At the moment Just tells player that the item they use does not exist if they try to use it without finding it in the game
 	static Items.Key key1=new Items.Key();  //Create Key object
 	static Items.Rocks PlayerRocks=new Items.Rocks(); 
-	static Weapons mace = new Items().new Weapons("Mace", "A sturdy mace, someone must have gotten careless and left this out.", 5);
+	static Weapons mace = new Items().new Weapons("Mace", "A sturdy mace, someone must have gotten careless and left this out.\n", 5);
+	static Weapons Sword = new Items().new Weapons("Sword", "A nice, sharp blade, I can definetly use this.\n", 8);
+	static Weapons Axe = new Items().new Weapons("Axe", "Good handle, Good for quick attacks\n", 3);
 	
 	//Inventory Creation
 	static Inventory PlayerInventory=new Inventory();
@@ -151,11 +153,12 @@ public class BCDK {
 		//Combat 	
 		case "F":
 		case "FIGHT":
-			Entities player = new Entities("Player", 100, 20);
-			Entities npc = new Entities("Enemy", 100, 0);
-			Combat fight = new Combat(player, npc);
+			Enemy npc = new Enemy("Enemy", 100, 0);
+			PlayerInventory.addWeapons(mace);
+			PlayerInventory.addWeapons(Sword);
+			Combat fight = new Combat(player, npc,PlayerInventory);
 			Entities winner = fight.FightWinner();
-			if(winner.getName().equals(player.getName())) {
+			if(winner.GetName().equals(player.GetName())) {
 				System.out.println("Battle ended");
 				winner = null;
 			} else {

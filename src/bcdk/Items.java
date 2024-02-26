@@ -95,6 +95,10 @@ public class Items {
     	        return WeaponDescription;
     	    }
     	  
+    	  public int getWeaponDamage() {
+  	        return WeaponDamage;
+  	    }
+    	  
     	  public String getWeaponName() {
   	        return WeaponName;
   	    }
