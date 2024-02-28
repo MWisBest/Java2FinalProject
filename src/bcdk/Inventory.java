@@ -63,6 +63,8 @@ public class Inventory {
 	  */
 	 public void addWeapons(Weapons weapons) {
 		 this.weapons.add(weapons);
+		 // sort weapons using internal comparator
+		 this.weapons.sort(null);
 	 }
 
 	 /**
@@ -71,6 +73,7 @@ public class Inventory {
 	  */
 	 public void removeWeapons(Weapons weapons) {
 		 this.weapons.remove(weapons);
+		 // sort not required on remove
 	 }
 	 
 	 

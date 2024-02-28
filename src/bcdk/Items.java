@@ -79,7 +79,7 @@ public class Items {
     }
         
        //Used for Combat and actions in the world like breaking door down
-       public  class Weapons{ 
+       public class Weapons implements Comparable<Weapons> {
     	  private  String WeaponName; //name of item
     	  private  String WeaponDescription; //Description of Item for player
     	  private int WeaponDamage;  //How much damage this will do. Update when combat is implemented 
@@ -114,6 +114,17 @@ public class Items {
     		   //Remove door- Get door ID and delete?
     		   //Call NPC's within 3 rooms over
     	   }
+
+
+		@Override
+		/**
+		 * Compares two weapons to sort them by damage (most damage first).
+		 *
+		 * @param weapon Weapon to compare to
+		 */
+		public int compareTo(Weapons weapon) {
+			return weapon.WeaponDamage - this.WeaponDamage;
+		}
     	   
        }
         
