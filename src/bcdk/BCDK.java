@@ -207,6 +207,9 @@ public class BCDK {
 				logger.error(e);
 				System.out.println("Error initializing savegame data. Saving will be unavailable.");
 				savegame = null;
+			} catch(SaveGame.VersionMismatchException e) {
+				System.out.println("Your previous savegame uses an old format that is not compatible with this version, your progress was reset.");
+				logger.warn(e);
 			}
 
 			while(RUNNING) {
