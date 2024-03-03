@@ -112,5 +112,42 @@ public class Items {
     	   }
     	   
        }
-        
+       
+       public static class Phial {
+    		    private String PhialName; // Name of the phial
+    		    private String PhialDescription; // Description of the phial
+    		    private int damage; // Amount of damage the phial inflicts
+
+    		    // Constructor
+    		    public Phial(String PhialName, String PhialDescription, int damage) {
+    		        this.PhialName = PhialName;
+    		        this.PhialDescription = PhialDescription;
+    		        this.damage = damage;
+    		    }
+
+    		    // Getter methods
+    		    public String getPotionName() {
+    		        return PhialName;
+    		    }
+
+    		    public String getPotionDescription() {
+    		        return PhialDescription;
+    		    }
+
+    		    public int getDamage() {
+    		        return damage;
+    		    }
+
+    		    // Method to describe the potion
+    		    public void DescribePotion() {
+    		        System.out.println(PhialDescription);
+    		    }
+
+    		    // Method to use the potion and inflict damage to an enemy
+    		    public void UsePotion(NPCBehavior guard) {
+    		        System.out.println("You throw the " + PhialName + " at the enemy!");
+    		        System.out.println("It inflicts " + damage + " damage to the enemy!");
+    		        guard.takeDamage(damage);
+    		    }
+    		}
 }
