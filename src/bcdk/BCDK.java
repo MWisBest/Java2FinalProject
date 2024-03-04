@@ -154,10 +154,9 @@ public class BCDK {
 		case "F":
 		case "FIGHT":
 			Enemy npc = new Enemy("Enemy", 100, 0);
-			PlayerInventory.addWeapons(mace);
-			PlayerInventory.addWeapons(Sword);
-			Combat fight = new Combat(player, npc,PlayerInventory);
+			Combat fight = new Combat(player, npc, PlayerInventory);
 			Entities winner = fight.FightWinner();
+			// determine which entity won the fight based on the winner variable 
 			if(winner.GetName().equals(player.GetName())) {
 				System.out.println("Battle ended");
 				winner = null;
