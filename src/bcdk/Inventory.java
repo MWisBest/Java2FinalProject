@@ -8,15 +8,28 @@ import bcdk.Items.Key;
 import bcdk.Items.Rocks;
 import bcdk.Items.Weapons;
 
+/**
+ * keep track of all the items that the player owns. 
+ */
 public class Inventory {
 	
-	// the Lists that will store all the player items 
+	/**
+	 * store the keys that the player has in inventory
+	 */
 	private List<Key> keys;
+	
+	/**
+	 * store the rocks that the player has in inventory
+	 */
 	private List<Rocks> rocks;
+	
+	/**
+	 * store the weapons that the player has in inventory
+	 */
 	private List<Weapons> weapons;
 	
 	/**
-	 * class constructor
+	 * class constructor. initiate track of items
 	 */
 	public Inventory() {
 		this.keys = new ArrayList<>();
@@ -26,48 +39,48 @@ public class Inventory {
 	
 
 	/**
-	 * 
-	 * @param key
+	 * adds a key to to the player inventory
+	 * @param key - key to add
 	 */
 	 public void addKey(Key key) {
 		 keys.add(key);
 	 }
 
 	 /**
-	  * 
-	  * @param key
+	  * deletes a key from the player inventory
+	  * @param key - key to delete
 	  */
 	 public void removeKey(Key key) {
 		 keys.remove(key);
 	 }
 	
 	 /**
-	  * 
-	  * @param rocks
+	  * adds a rock to the player inventory
+	  * @param rocks -  rock to add
 	  */
 	 public void addRocks(Rocks rocks) {
 		 this.rocks.add(rocks);
 	 }
 
 	 /**
-	  * 
-	  * @param rocks
+	  * removes a rock from the player inventory 
+	  * @param rocks -  the rock to remove
 	  */
 	 public void removeRocks(Rocks rocks) {
 		 this.rocks.remove(rocks);
 	 }
 	 
 	 /**
-	  * 
-	  * @param weapons
+	  * adds a weapon to the player inventory
+	  * @param weapons - weapon to add
 	  */
 	 public void addWeapons(Weapons weapons) {
 		 this.weapons.add(weapons);
 	 }
 
 	 /**
-	  * 
-	  * @param weapons
+	  * deleted a weapon from the player inventory 
+	  * @param weapons - weapon to remove
 	  */
 	 public void removeWeapons(Weapons weapons) {
 		 this.weapons.remove(weapons);
@@ -76,11 +89,13 @@ public class Inventory {
 	 
 	/**
 	 * Modified so returns amount of keys once
+	 * allow player to see how many keys they have in their inventory. 
 	 */
 	 public void displayKeys() {
 		 int PlaceholderKey=0;
 	        System.out.println("Keys in Inventory:");
-	        if(!keys.isEmpty()) {
+	        // if player has zero keys, forloop is skipped.
+	        if(!keys.isEmpty()) { 
 	        	for (Key key : keys) {
 	        		PlaceholderKey=key.KeyCount;
 	        	}
@@ -91,7 +106,8 @@ public class Inventory {
 	                {
 	                	System.out.println("You have " + PlaceholderKey + " iron key left");
 	                }
-	        } else {
+	        } else { 
+	        	// player is notified that they have no keys
 	        	System.out.println("You do not own any keys");
 	        }
 	        
@@ -99,10 +115,12 @@ public class Inventory {
 	 
 	 /**
 	  * Modified so should only print Rock amount once
+	  * allow player to see how many rocks they have in their inventory 
 	  */
 	 public void displayRocks() {
 		 int PlaceholderRock = 0;
 	        System.out.println("Rocks in Inventory:");
+	        // if player has zero rocks, forloop is skipped
 	        if(!rocks.isEmpty()) {
 	        	for (Rocks rock : rocks) {
 	        		PlaceholderRock=rock.RockCount;
@@ -116,6 +134,7 @@ public class Inventory {
 	                }
 	        	
 	        } else {
+	        	// player is notified that they have no rocks
 	        	System.out.println("You do not have any rocks");
 	        }
 	        
@@ -123,9 +142,11 @@ public class Inventory {
 	 
 	 /**
 	  * Says description for each weapon in inventory. Currently only a mace.
+	  * allows player to see how many weapons they have in their inventory and what each weapon in
 	  */
 	 public void displayWeapons() {
 	        System.out.println("Weapons in inventory");
+	        // only runs if statement if player has at least 1 weapon
 	        if(!weapons.isEmpty()) {
 	        	int count = 1;
 	        	for (Weapons weapon : weapons) {
@@ -133,11 +154,16 @@ public class Inventory {
 	        	count++;
 	        	}	        	
 	        } else {
+	        	// player is informed that they do not have any weapons in inventory
 	        	System.out.println("Nothing but your fists\n");
 	        }
 	        
 	    }
 	 
+	 /**
+	  * counts the amount of weapons that the player has in their inventory 
+	  * @return - weapon count
+	  */
 	 public int WeaponCount() {
 		 int count = 0;
 		 if(!weapons.isEmpty()) {
@@ -148,6 +174,10 @@ public class Inventory {
 		 return count;
 	 }
 	 
+	 /**
+	  * get the array of weapons that player has so he can pick during combat
+	  * @return - array of weapons
+	  */
 	 public ArrayList<Weapons> GetWapons() {
 		 return (ArrayList<Weapons>) weapons;
 	 }

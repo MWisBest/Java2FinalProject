@@ -1,8 +1,67 @@
 package bcdk;
 
+/*
+ * represents the player who will play the game. 
+ */
 public class Player extends Entities {
+	/**
+	 * the cooldown of the heal ability
+	 */
+	private int HealCooldown = 100;
+	
+	/**
+	 * the amount that player can heal
+	 */
+	private int HealAmount;
+	
+	/**
+	 * class constructor
+	 * @param name - the name given to the player
+	 * @param health - the amount of initial health given to player
+	 * @param extraDmg -  the amount of initial extra damage that player can cause
+	 */
     public Player(String name, int health, int extraDmg) {
-        super(name, health, extraDmg);
+        super(name, health, extraDmg); // the derived variables
+    }
+    
+    /**
+     * gets the amount of cooldown to go before healing is available
+     * @return cooldown amount
+     */
+    public int getHealCoolDown() {
+    	return HealCooldown;
+    }
+    
+    /**
+     * reduce the amount of cooldown needed before healing becomes available
+     */
+    public void ChangeCoolDown() {
+    	HealCooldown -= 20;
+    }
+    
+    
+    /**
+     * reset cool down back to 0
+     */
+    public void resetCoolDown() {
+    	HealCooldown = 100;
+    }
+    
+    
+    /**
+     * changes the amount of healing that player can do 
+     */
+    public void setHealAmount() {
+    	HealAmount = GetHealth() / 3;
+    }
+    
+    
+    /**
+     * gets the amount that the player can heal
+     * @return - heal amunt
+     */
+    public int getHealAmount() {
+    	return HealAmount;
     }
 }
     
