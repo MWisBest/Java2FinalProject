@@ -1,12 +1,12 @@
-package bcdk;
+package bcdk.item;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import bcdk.Items.Key;
-import bcdk.Items.Rocks;
-import bcdk.Items.Weapons;
+import bcdk.item.Items.Key;
+import bcdk.item.Items.Rocks;
+import bcdk.item.Items.Weapons;
 
 /**
  * keep track of all the items that the player owns.
@@ -21,12 +21,12 @@ public class Inventory {
 	/**
 	 * store the rocks that the player has in inventory
 	 */
-	private List<Rocks> rocks;
+	private List<Rock> rocks;
 
 	/**
 	 * store the weapons that the player has in inventory
 	 */
-	private List<Weapons> weapons;
+	private List<Weapon> weapons;
 
 	/**
 	 * class constructor. initiate track of items
@@ -60,7 +60,7 @@ public class Inventory {
 	 * 
 	 * @param rocks - rock to add
 	 */
-	public void addRocks(Rocks rocks) {
+	public void addRocks(Rock rocks) {
 		this.rocks.add(rocks);
 	}
 
@@ -69,7 +69,7 @@ public class Inventory {
 	 * 
 	 * @param rocks - the rock to remove
 	 */
-	public void removeRocks(Rocks rocks) {
+	public void removeRocks(Rock rocks) {
 		this.rocks.remove(rocks);
 	}
 
@@ -78,7 +78,7 @@ public class Inventory {
 	 * 
 	 * @param weapons - weapon to add
 	 */
-	public void addWeapons(Weapons weapons) {
+	public void addWeapons(Weapon weapons) {
 		this.weapons.add(weapons);
 		// sort weapons using internal comparator
 		this.weapons.sort(null);
@@ -89,7 +89,7 @@ public class Inventory {
 	 * 
 	 * @param weapons - weapon to remove
 	 */
-	public void removeWeapons(Weapons weapons) {
+	public void removeWeapons(Weapon weapons) {
 		this.weapons.remove(weapons);
 		// sort not required on remove
 	}
@@ -127,7 +127,7 @@ public class Inventory {
 		System.out.println("Rocks in Inventory:");
 		// if player has zero rocks, forloop is skipped
 		if (!rocks.isEmpty()) {
-			for (Rocks rock : rocks) {
+			for (Rock rock : rocks) {
 				PlaceholderRock = rock.RockCount;
 			}
 			if (PlaceholderRock > 1) {
@@ -153,8 +153,8 @@ public class Inventory {
 		// only runs if statement if player has at least 1 weapon
 		if (!weapons.isEmpty()) {
 			int count = 1;
-			for (Weapons weapon : weapons) {
-				System.out.println(count + ": " + weapon.getWeaponName() + ": " + weapon.getWeaponDescription());
+			for (Weapon weapon : weapons) {
+				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription());
 				count++;
 			}
 		} else {
@@ -172,7 +172,7 @@ public class Inventory {
 	public int WeaponCount() {
 		int count = 0;
 		if (!weapons.isEmpty()) {
-			for (Weapons weapon : weapons) {
+			for (Weapon weapon : weapons) {
 				count++;
 			}
 		}
@@ -184,8 +184,8 @@ public class Inventory {
 	 * 
 	 * @return - array of weapons
 	 */
-	public ArrayList<Weapons> GetWapons() {
-		return (ArrayList<Weapons>) weapons;
+	public List<Weapon> GetWeapons() {
+		return weapons;
 	}
 
 }

@@ -1,16 +1,18 @@
-package bcdk;
+package bcdk.entity;
+
+import bcdk.map.GameMap;
 
 public class NPCBehavior {
 	private int currentRow;
 	private int currentCol;
 	private int health;
-	private Map gameMap;
+	private GameMap gameMap;
 
-	public NPCBehavior(Map map, int startHealth) {
+	public NPCBehavior(GameMap map, int startHealth) {
 		gameMap = map;
 		health = startHealth;
-		currentRow = map.GetStartRow();
-		currentCol = map.GetStartCol();
+		//currentRow = map.GetStartRow();
+		//currentCol = map.GetStartCol();
 	}
 
 	// Move
@@ -22,6 +24,7 @@ public class NPCBehavior {
 	// 4,3 4,4 4,8 4,9 4,10
 	// Format is ROW,COLUMN
 	public synchronized void move(int newRow, int newCol) {
+		/*
 		if (gameMap.IsMovementValid(newRow, newCol)) {
 			currentRow = newRow;
 			currentCol = newCol;
@@ -29,7 +32,7 @@ public class NPCBehavior {
 																				// build
 		} else {
 			System.out.println("Invalid movement!"); // Testing message. Remove in final build
-		}
+		}*/
 	}
 
 	// Get row

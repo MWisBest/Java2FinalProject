@@ -1,12 +1,12 @@
-package bcdk;
+package bcdk.item;
 
 public class Items {
 	// Item Ideas so far
 
-	public static class Key { // Used to open a locked door, Could implement more keys and more doors
+	private static class Key { // Used to open a locked door, Could implement more keys and more doors
 		String KeyDescription = "A large iron key"; // IF player examines key could give hints to where key goes to, or
 													// just says key can unlock XX door
-		int KeyCount = 0; // Amount of keys
+		public int KeyCount = 0; // Amount of keys
 
 		public void UseKey() {
 			if (KeyCount > 0) {
@@ -20,10 +20,10 @@ public class Items {
 
 	}
 
-	public static class Rocks { // Used to distract Guards so player can be sneaky.
+	private static class Rocks { // Used to distract Guards so player can be sneaky.
 		// Once rock thrown spawn it in the room it was thrown to? Or make single use?
 
-		int RockCount = 4; // rework to work with inventory
+		public int RockCount = 4; // rework to work with inventory
 		// How many times a player can throw a rock to move a guard to a room that is
 		// NORTH, EAST,SOUTH,WEST
 
@@ -83,7 +83,7 @@ public class Items {
 	/**
 	 * Used for Combat and actions in the world like breaking door down
 	 */
-	public class Weapons implements Comparable<Weapons> {
+	private class Weapons implements Comparable<Weapons> {
 		private String WeaponName; // name of item
 		private String WeaponDescription; // Description of Item for player
 		private int WeaponDamage; // How much damage this will do. Update when combat is implemented

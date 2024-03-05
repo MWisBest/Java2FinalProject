@@ -5,7 +5,15 @@ import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
 
-import bcdk.Items.Weapons;
+import bcdk.entity.Enemy;
+import bcdk.entity.Entities;
+import bcdk.entity.NPCBehavior;
+import bcdk.entity.Player;
+import bcdk.item.Inventory;
+import bcdk.item.Items;
+import bcdk.item.Items.Weapons;
+import bcdk.map.Direction;
+import bcdk.map.GameMap;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -68,7 +76,9 @@ public class BCDK {
 				case "SOUTH":
 				case "WEST":
 				case "EAST":
-					ret.append(Movement.UpdatePostion(input[1], player));
+					Direction dir = Direction.valueOf(input[1]);
+					
+					//ret.append(Movement.UpdatePostion(input[1], player));
 					break;
 				default:
 					ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
@@ -198,7 +208,9 @@ public class BCDK {
 		System.out.println("Welcome to BCDK.");
 
 		// Get the map
-		Map map = Map.getInstance();
+		GameMap map = new GameMap();
+		// Set player initial position.
+		player.setLocation(map.getInitialRoom());
 		// create guard with 10 health that uses current map
 		// Can be moved have health changed with methods
 		NPCBehavior guard1 = new NPCBehavior(map, 10);

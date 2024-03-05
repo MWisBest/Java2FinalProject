@@ -1,4 +1,4 @@
-package bcdk;
+package bcdk.entity;
 
 /*
  * represents the enemies that will be encountered in the game by the player

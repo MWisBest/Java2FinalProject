@@ -2,7 +2,11 @@ package bcdk;
 
 import java.util.Scanner;
 
-import bcdk.Items.Weapons;
+import bcdk.entity.Enemy;
+import bcdk.entity.Entities;
+import bcdk.entity.Player;
+import bcdk.item.Inventory;
+import bcdk.item.Items.Weapons;
 
 /**
  * represents the combat area where player will fight an enemy
@@ -165,7 +169,7 @@ public class Combat {
 				int inputx = Integer.parseInt(inputz);
 				// verify that use input falls within the available weapons
 				if (inputx >= 1 && inputx <= max) {
-					UserWeapon = Inv.GetWapons().get(inputx - 1);
+					UserWeapon = Inv.GetWeapons().get(inputx - 1);
 					Player.SetDamage(UserWeapon.getWeaponDamage());
 				} else {
 					// inform player when they make an invalid weapon choice

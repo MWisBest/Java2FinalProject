@@ -1,4 +1,4 @@
-package bcdk;
+package bcdk.entity;
 
 /**
  * represents basic entity that can be expanded upon depending on entity type

@@ -1,4 +1,7 @@
-package bcdk;
+package bcdk.entity;
+
+import bcdk.map.GameMap;
+import bcdk.map.Room;
 
 /*
  * represents the player who will play the game. 
@@ -14,8 +17,7 @@ public class Player extends Entities {
 	 */
 	private int HealAmount;
 	
-	private int locationX;
-	private int locationY;
+	private Room location;
 
 	/**
 	 * class constructor
@@ -26,8 +28,6 @@ public class Player extends Entities {
 	 */
 	public Player(String name, int health, int extraDmg) {
 		super(name, health, extraDmg); // the derived variables
-		setLocationX(Map.getInstance().GetStartRow());
-		setLocationY(Map.getInstance().GetStartCol());
 	}
 
 	/**
@@ -69,19 +69,11 @@ public class Player extends Entities {
 		return HealAmount;
 	}
 
-	public int getLocationX() {
-		return locationX;
+	public Room getLocation() {
+		return location;
 	}
 
-	public void setLocationX(int locationX) {
-		this.locationX = locationX;
-	}
-
-	public int getLocationY() {
-		return locationY;
-	}
-
-	public void setLocationY(int locationY) {
-		this.locationY = locationY;
+	public void setLocation(Room room) {
+		this.location = room;
 	}
 }
