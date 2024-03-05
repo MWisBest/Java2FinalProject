@@ -58,7 +58,7 @@ public class Items {
                 }
                 
                 RockCount--;
-             // Tell user how many rocks they have left. Grammar is changed depending on the rock amount
+                // Tell user how many rocks they have left. Grammar is changed depending on the rock amount
                 if (RockCount>1) {
                 	System.out.println("You have " + RockCount + " more rocks left");
                 }
@@ -78,7 +78,9 @@ public class Items {
         }
     }
         
-       //Used for Combat and actions in the world like breaking door down
+       /**
+       * Used for Combat and actions in the world like breaking door down
+       */
        public  class Weapons{ 
     	  private  String WeaponName; //name of item
     	  private  String WeaponDescription; //Description of Item for player
@@ -91,23 +93,40 @@ public class Items {
     		  this.WeaponDamage=WeaponDamage;
     	  }
     	  
+    	  /**
+    	   * gets the description of the weapon specified
+    	   * @return - The weapon description
+    	   */
     	  public String getWeaponDescription() {
     	        return WeaponDescription;
-    	    }
+    	  }
     	  
+    	  /**
+    	   * gets the amount of total damage caused by the weapon
+    	   * @return - the total damage
+    	   */
     	  public int getWeaponDamage() {
   	        return WeaponDamage;
-  	    }
+  	      }
     	  
+    	  /**
+    	   * gets the name of the weapon
+    	   * @return - weapon name
+    	   */
     	  public String getWeaponName() {
   	        return WeaponName;
-  	    }
+  	      }
     	  
-    	   //Tell user about their weapon
+    	  /**
+    	   * Tell user about their weapon
+    	   */
     	   public void WhatWeapon() {
     		   System.out.println(WeaponDescription);
     	   }
     	   
+    	   /**
+    	    * 
+    	    */
     	   public void SmashDoor() {
     		   //Break door description
     		   System.out.println("As the door splinters you hear distant footstep approach ever closer");
