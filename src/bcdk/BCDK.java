@@ -60,18 +60,20 @@ public class BCDK {
 		// further examples/ideas
 		case "GO":
 		case "MOVE":
-
-			switch (input[1]) {
-			case "NORTH":
-				break;
-			case "SOUTH":
-				break;
-			case "WEST":
-				break;
-			case "EAST":
-				break;
-			default:
-				break;
+			if (input.length < 2) {
+				ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
+			} else {
+				switch (input[1]) {
+				case "NORTH":
+				case "SOUTH":
+				case "WEST":
+				case "EAST":
+					ret.append(Movement.UpdatePostion(input[1], player));
+					break;
+				default:
+					ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
+					break;
+				}
 			}
 			break;
 		case "LOOK":

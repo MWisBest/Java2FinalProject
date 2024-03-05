@@ -13,6 +13,9 @@ public class Player extends Entities {
 	 * the amount that player can heal
 	 */
 	private int HealAmount;
+	
+	private int locationX;
+	private int locationY;
 
 	/**
 	 * class constructor
@@ -23,6 +26,8 @@ public class Player extends Entities {
 	 */
 	public Player(String name, int health, int extraDmg) {
 		super(name, health, extraDmg); // the derived variables
+		setLocationX(Map.getInstance().GetStartRow());
+		setLocationY(Map.getInstance().GetStartCol());
 	}
 
 	/**
@@ -62,5 +67,21 @@ public class Player extends Entities {
 	 */
 	public int getHealAmount() {
 		return HealAmount;
+	}
+
+	public int getLocationX() {
+		return locationX;
+	}
+
+	public void setLocationX(int locationX) {
+		this.locationX = locationX;
+	}
+
+	public int getLocationY() {
+		return locationY;
+	}
+
+	public void setLocationY(int locationY) {
+		this.locationY = locationY;
 	}
 }

@@ -10,7 +10,7 @@ public class Map {
 			{ false, false, false, true, true, false, false, false, true, true, true } };
 
 	private Map() {
-	};
+	}
 
 	private static final Map instance = new Map();
 
