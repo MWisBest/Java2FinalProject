@@ -10,8 +10,6 @@ import bcdk.entity.Enemy;
 import bcdk.entity.Entities;
 import bcdk.entity.NPCBehavior;
 import bcdk.entity.Player;
-import bcdk.item.Inventory;
-import bcdk.item.Items;
 import bcdk.map.Direction;
 import bcdk.map.GameMap;
 
@@ -23,7 +21,6 @@ public class BCDK {
 	static Player player = new Player("Player", 100, 0);
 	static GameMap map = new GameMap();
 	public static SaveGame savegame = null;
-
 
 	/**
 	 * Takes user input and attempts to process it.
@@ -59,19 +56,19 @@ public class BCDK {
 		case "MOVE":
 			if (input.length < 2) {
 				ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
-			} else {
-				switch (input[1]) {
-				case "NORTH":
-				case "SOUTH":
-				case "WEST":
-				case "EAST":
-					Direction dir = Direction.valueOf(input[1]);
-					map.move(dir, player);
-					break;
-				default:
-					ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
-					break;
-				}
+				break;
+			}
+			switch (input[1]) {
+			case "NORTH":
+			case "SOUTH":
+			case "WEST":
+			case "EAST":
+				Direction dir = Direction.valueOf(input[1]);
+				map.move(dir, player);
+				break;
+			default:
+				ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
+				break;
 			}
 			break;
 		case "LOOK":
@@ -94,39 +91,37 @@ public class BCDK {
 		case "INVENTORY":
 		case "I":
 			// Use items that are in inventory
+			if (input.length == 1) {
+				ret.append("Usage: INVENTORY [USE/EXAMINE]");
+				break;
+			}
 			switch (input[1]) {
 			case "USE":
+				if (input.length == 2) {
+					ret.append("Usage: INVENTORY USE [KEY/ROCK]");
+					break;
+				}
 				switch (input[2]) {
 				case "KEY":
-					//key1.UseKey(); // For now placeholder text. In future if used next to locked door, then opens
-									// that door.
+					// key1.UseKey(); // For now placeholder text. In future if used next to locked
+					// door, then opens
+					// that door.
 					break;
 				case "ROCK":
-				case "ROCKS":// Throw rock in that direction, add thing that calls AI to it. If there is no
-								// room in that direction just throw rock against wall, alert AI to player
-								// location
-					switch (input[3]) {
-					case "NORTH":
-						//PlayerRocks.Throw("north");
-						break;
-					case "SOUTH":
-						//PlayerRocks.Throw("south");
-						break;
-					case "WEST":
-						//PlayerRocks.Throw("west");
-						break;
-					case "EAST":
-						//PlayerRocks.Throw("east");
-						break;
-					default:
-						break;
-					}
+				case "ROCKS":
 
+					break;
+				default:
+					ret.append("Usage: INVENTORY USE [KEY/ROCK]");
 					break;
 				}
 				break;
 			// Look at items that are in inventory
 			case "EXAMINE":
+				if (input.length == 2) {
+					ret.append("Usage: INVENTORY EXAMINE [KEY/ROCK/WEAPONS]");
+					break;
+				}
 				switch (input[2]) {
 				case "KEY":
 					player.getInventory().displayKeys();
@@ -138,8 +133,15 @@ public class BCDK {
 				case "WEAPON":
 				case "WEAPONS":
 					player.getInventory().displayWeapons();
+					break;
+				default:
+					ret.append("Usage: INVENTORY EXAMINE [KEY/ROCK/WEAPONS]");
+					break;
 				}
-
+				break;
+			default:
+				ret.append("Usage: INVENTORY [USE/EXAMINE]");
+				break;
 			}
 			break;
 

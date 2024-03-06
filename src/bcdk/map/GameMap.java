@@ -92,8 +92,15 @@ public class GameMap {
 		
 		if (roomRequiredCP != null) {
 			if (!player.checkForCheckpoint(roomRequiredCP)) {
-				// TODO: handle player not having checkpoint
-				return;
+				System.out.println("You need to complete a checkpoint before going that direction.");
+				if (roomRequiredCP.equals(rockThrown)) {
+					System.out.println("There are two guards to the east.");
+					System.out.println("You need to figure out a use for your rocks to continue.");
+					return;
+				} else if (roomRequiredCP.equals(keyAcquired)) {
+					System.out.println("You need to find the key to open the next door. It should be nearby...");
+					return;
+				}
 			}
 		}
 		
