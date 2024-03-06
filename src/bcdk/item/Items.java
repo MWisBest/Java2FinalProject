@@ -1,5 +1,7 @@
 package bcdk.item;
 
+import bcdk.entity.NPCBehavior;
+
 public class Items {
 	// Item Ideas so far
 
