@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class SaveGame implements AutoCloseable {
 	private static int VERSION = 1;
 	private Connection dbConnection = null;
@@ -21,16 +20,17 @@ public class SaveGame implements AutoCloseable {
 		ResultSet rs = null;
 		try {
 			rs = stmt.executeQuery("SELECT VERSION FROM DBINFO");
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			// assume the table didn't exist
 		}
-		if(rs == null || !rs.next()) { // empty result, database needs to be created
+		if (rs == null || !rs.next()) { // empty result, database needs to be created
 			BCDK.logger.trace("SaveGame: Database was empty, creating");
 			this.createDB();
 		} else {
 			// rs.next ran, so it moved to the first (and only) result
 			int curVersion = rs.getInt("VERSION");
-			if(curVersion != VERSION) {
+			if (curVersion != VERSION) {
+				rs.close();
 				// version mismatch, also create the database
 				BCDK.logger.trace("SaveGame: Database was old version, deleting and re-making");
 				this.createDB();
@@ -42,23 +42,34 @@ public class SaveGame implements AutoCloseable {
 	}
 
 	private void createDB() throws SQLException {
+		deleteSaveData();
+		
 		Statement stmt = this.dbConnection.createStatement();
-
-		// drop tables
-		stmt.executeUpdate("DROP TABLE IF EXISTS DBINFO");
 
 		// create tables
 		stmt.executeUpdate("CREATE TABLE DBINFO (VERSION INTEGER PRIMARY KEY)");
 
 		// fill in version number
 		stmt.executeUpdate("INSERT INTO DBINFO VALUES(" + VERSION + ")");
+		
+		stmt.close();
 	}
 
 	@Override
 	public void close() throws Exception {
-		if(this.dbConnection != null) {
+		if (this.dbConnection != null) {
 			this.dbConnection.close();
 		}
+	}
+	
+	public void deleteSaveData() throws SQLException {
+		Statement stmt = this.dbConnection.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM sqlite_master WHERE type='table';");
+		while (rs.next()) {
+			stmt.execute("DROP TABLE " + rs.getString("tbl_name"));
+		}
+		
+		stmt.close();
 	}
 
 	class VersionMismatchException extends RuntimeException {
