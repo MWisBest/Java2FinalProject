@@ -55,7 +55,6 @@ public class Combat {
 
 			boolean Defend = false;// determines if the damage from enemy should be halfed
 			Boolean SkipEnemyTurn = false; // determine if enemy turn should be skipped
-			Player.ChangeCoolDown();
 
 			if (NPC.getSpecialCharge() == 60) {
 				System.out.println(NPC.GetName() + " will use special attack on his next turn");
@@ -80,17 +79,6 @@ public class Combat {
 			// player defends so enemy does not harm them as much
 			else if (input.equalsIgnoreCase("D")) {
 				Defend = true;
-			}
-			// player heals if available
-			else if (input.equalsIgnoreCase("H")) {
-				if (Player.getHealCoolDown() == 0) {
-					Player.setHealAmount();
-					Player.AddHealth(Player.getHealAmount());
-					System.out.println("Player heals for " + Player.getHealAmount() + " points.");
-				} else {
-					System.out.println("Healing is unavailable.");
-					System.out.println("Cooldown status: " + Player.getHealCoolDown());
-				}
 			}
 			// player gets to check inventory to change weapon
 			else if (input.equalsIgnoreCase("I")) {
