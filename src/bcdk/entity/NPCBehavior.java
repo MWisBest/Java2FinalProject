@@ -55,4 +55,20 @@ public class NPCBehavior {
 	public synchronized void setHealth(int newHealth) {
 		health = newHealth;
 	}
+	
+    // Lower health of guard after combat or item use
+	public void takeDamage(int damage) {
+		if (health > 0) {
+	        health -= damage;
+	        if (health <= 0) {
+	            System.out.println("Guard has been defeated!");
+	            // Additional actions can be taken here if the guard is defeated, such as removing it from the map
+	        } else {
+	            System.out.println("Guard took " + damage + " damage. Remaining health: " + health);
+	        }
+	    } else {
+	        System.out.println("Guard is already defeated!");
+	    }
+
+	}
 }
