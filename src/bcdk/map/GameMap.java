@@ -3,6 +3,10 @@ package bcdk.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import bcdk.item.Key;
+import bcdk.item.Rock;
+import bcdk.item.Weapon;
+
 public class GameMap {
 	
 	private List<Room> roomList = new ArrayList<>();
@@ -14,6 +18,12 @@ public class GameMap {
 		Room centralSouth = new Room("2S");
 		Room guards = new Room("3E");
 		Room exit = new Room("Exit");
+		
+		centralNorth.addFloorItem(new Weapon("Axe", "Good handle, Good for quick attacks", 5));
+		centralSouth.addFloorItem(new Weapon("Sword", "A nice, sharp blade. I can definetly use this.", 8));
+		central.addFloorItem(new Rock());
+		central.addFloorItem(new Rock());
+		guards.addFloorItem(new Key());
 		
 		Room.createWestEastPair(startWest, central);
 		Room.createWestEastPair(central, guards);

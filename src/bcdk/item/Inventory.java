@@ -4,10 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import bcdk.item.Items.Key;
-import bcdk.item.Items.Rocks;
-import bcdk.item.Items.Weapons;
-
 /**
  * keep track of all the items that the player owns.
  */
@@ -99,23 +95,7 @@ public class Inventory {
 	 * they have in their inventory.
 	 */
 	public void displayKeys() {
-		int PlaceholderKey = 0;
-		System.out.println("Keys in Inventory:");
-		// if player has zero keys, forloop is skipped.
-		if (!keys.isEmpty()) {
-			for (Key key : keys) {
-				PlaceholderKey = key.KeyCount;
-			}
-			if (PlaceholderKey > 1) {
-				System.out.println("You have " + PlaceholderKey + " iron keys left");
-			} else {
-				System.out.println("You have " + PlaceholderKey + " iron key left");
-			}
-		} else {
-			// player is notified that they have no keys
-			System.out.println("You do not own any keys");
-		}
-
+		System.out.println("Keys in inventory: " + keys.size());
 	}
 
 	/**
@@ -123,24 +103,7 @@ public class Inventory {
 	 * rocks they have in their inventory
 	 */
 	public void displayRocks() {
-		int PlaceholderRock = 0;
-		System.out.println("Rocks in Inventory:");
-		// if player has zero rocks, forloop is skipped
-		if (!rocks.isEmpty()) {
-			for (Rock rock : rocks) {
-				PlaceholderRock = rock.RockCount;
-			}
-			if (PlaceholderRock > 1) {
-				System.out.println("You have " + PlaceholderRock + " more rocks left");
-			} else {
-				System.out.println("You have " + PlaceholderRock + " more rock left");
-			}
-
-		} else {
-			// player is notified that they have no rocks
-			System.out.println("You do not have any rocks");
-		}
-
+		System.out.println("Rocks in inventory: " + rocks.size());
 	}
 
 	/**
@@ -149,17 +112,17 @@ public class Inventory {
 	 * weapon in
 	 */
 	public void displayWeapons() {
-		System.out.println("Weapons in inventory");
+		System.out.println("Weapons in inventory: ");
 		// only runs if statement if player has at least 1 weapon
 		if (!weapons.isEmpty()) {
 			int count = 1;
 			for (Weapon weapon : weapons) {
-				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription());
+				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
 				count++;
 			}
 		} else {
 			// player is informed that they do not have any weapons in inventory
-			System.out.println("Nothing but your fists\n");
+			System.out.println("Nothing but your fists.");
 		}
 
 	}
@@ -170,13 +133,7 @@ public class Inventory {
 	 * @return - weapon count
 	 */
 	public int WeaponCount() {
-		int count = 0;
-		if (!weapons.isEmpty()) {
-			for (Weapon weapon : weapons) {
-				count++;
-			}
-		}
-		return count;
+		return weapons.size();
 	}
 
 	/**

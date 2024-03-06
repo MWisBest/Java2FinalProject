@@ -1,12 +1,9 @@
-package bcdk;
+package bcdk.entity;
 
 import java.util.Scanner;
 
-import bcdk.entity.Enemy;
-import bcdk.entity.Entities;
-import bcdk.entity.Player;
 import bcdk.item.Inventory;
-import bcdk.item.Items.Weapons;
+import bcdk.item.Weapon;
 
 /**
  * represents the combat area where player will fight an enemy
@@ -30,7 +27,7 @@ public class Combat {
 	/**
 	 * the weapon that the user is currenty using in combat
 	 */
-	private Weapons UserWeapon;
+	private Weapon UserWeapon;
 
 	/**
 	 * class constructor
@@ -170,7 +167,7 @@ public class Combat {
 				// verify that use input falls within the available weapons
 				if (inputx >= 1 && inputx <= max) {
 					UserWeapon = Inv.GetWeapons().get(inputx - 1);
-					Player.SetDamage(UserWeapon.getWeaponDamage());
+					Player.SetDamage(UserWeapon.getDamage());
 				} else {
 					// inform player when they make an invalid weapon choice
 					System.out.println("Please enter a number between 1 and " + max + "\n");

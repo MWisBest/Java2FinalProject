@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
 
+import bcdk.entity.Combat;
 import bcdk.entity.Enemy;
 import bcdk.entity.Entities;
 import bcdk.entity.NPCBehavior;
 import bcdk.entity.Player;
 import bcdk.item.Inventory;
 import bcdk.item.Items;
-import bcdk.item.Items.Weapons;
 import bcdk.map.Direction;
 import bcdk.map.GameMap;
 
