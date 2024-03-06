@@ -3,6 +3,7 @@ package bcdk.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import bcdk.entity.Player;
 import bcdk.item.Key;
 import bcdk.item.Rock;
 import bcdk.item.Weapon;
@@ -59,5 +60,42 @@ public class GameMap {
 	
 	public Room getInitialRoom() {
 		return roomList.get(0);
+	}
+	
+	public void move(Direction dir, Player player) {
+		Room curRoom = player.getLocation();
+		Room nextRoom = null;
+		
+		switch (dir) {
+		case NORTH:
+			nextRoom = curRoom.getNorth();
+			break;
+		case SOUTH:
+			nextRoom = curRoom.getSouth();
+			break;
+		case WEST:
+			nextRoom = curRoom.getWest();
+			break;
+		case EAST:
+			nextRoom = curRoom.getEast();
+			break;
+		}
+		
+		if (nextRoom == null) {
+			System.out.println("There doesn't appear to be anything to the " + dir.toString() + ".");
+			return;
+		}
+		
+		Checkpoint roomRequiredCP = nextRoom.getRequiredCheckpoint();
+		
+		if (roomRequiredCP != null) {
+			if (!player.checkForCheckpoint(roomRequiredCP)) {
+				// TODO: handle player not having checkpoint
+				return;
+			}
+		}
+		
+		System.out.println("You move to the " + dir.toString());
+		player.setLocation(nextRoom);
 	}
 }

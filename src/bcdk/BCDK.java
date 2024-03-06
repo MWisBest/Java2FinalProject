@@ -21,6 +21,7 @@ public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
 	static Player player = new Player("Player", 100, 0);
+	static GameMap map = new GameMap();
 	public static SaveGame savegame = null;
 
 
@@ -65,8 +66,7 @@ public class BCDK {
 				case "WEST":
 				case "EAST":
 					Direction dir = Direction.valueOf(input[1]);
-					
-					//ret.append(Movement.UpdatePostion(input[1], player));
+					map.move(dir, player);
 					break;
 				default:
 					ret.append("Usage: " + input[0] + " [NORTH/SOUTH/WEST/EAST]");
@@ -195,8 +195,6 @@ public class BCDK {
 	public static void main(String[] args) {
 		System.out.println("Welcome to BCDK.");
 
-		// Get the map
-		GameMap map = new GameMap();
 		// Set player initial position.
 		player.setLocation(map.getInitialRoom());
 		// create guard with 10 health that uses current map
