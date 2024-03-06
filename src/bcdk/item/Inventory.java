@@ -97,6 +97,10 @@ public class Inventory {
 	public int getKeyCount() {
 		return this.keys.size();
 	}
+	
+	public int getWeaponCount() {
+		return this.weapons.size();
+	}
 
 	/**
 	 * Modified so returns amount of keys once allow player to see how many keys
