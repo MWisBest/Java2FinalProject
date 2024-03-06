@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bcdk.entity.Player;
+import bcdk.item.Inventory;
+import bcdk.item.Item;
 import bcdk.item.Key;
 import bcdk.item.Rock;
 import bcdk.item.Weapon;
@@ -97,5 +99,28 @@ public class GameMap {
 		
 		System.out.println("You move to the " + dir.toString());
 		player.setLocation(nextRoom);
+	}
+	
+	public void pickupItems(Player player) {
+		Room curRoom = player.getLocation();
+		List<Item> floorItems = curRoom.getFloorItems();
+		if (floorItems != null && floorItems.size() > 0) {
+			Inventory playerInventory = player.getInventory();
+			for (Item i : floorItems) {
+				if (i instanceof Rock) {
+					playerInventory.addRocks((Rock)i);
+					System.out.println("You picked up a rock.");
+				} else if (i instanceof Key) {
+					playerInventory.addKey((Key)i);
+					System.out.println("You picked up a key!");
+				} else if (i instanceof Weapon) {
+					playerInventory.addWeapons((Weapon)i);
+					System.out.println("You acquired a new weapon! Check your INVENTORY for details.");
+				}
+			}
+			floorItems.clear();
+		} else {
+			System.out.println("There's nothing on the floor here.");
+		}
 	}
 }

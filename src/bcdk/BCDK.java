@@ -87,21 +87,7 @@ public class BCDK {
 		case "P":
 		case "GRAB":
 		case "G":
-			switch (input[1]) {
-			case "KEY":
-				key1.KeyCount++;
-				PlayerInventory.addKey(key1);
-				// Add key into inventory
-				break;
-			case "ROCK":
-				PlayerRocks.RockCount++;
-				PlayerInventory.addRocks(PlayerRocks);
-				// Update RockCount and write that into inventory
-				break;
-			case "MACE":
-				PlayerInventory.addWeapons(mace);
-				break;
-			}
+			map.pickupItems(player);
 			break;
 
 		// Actions that relate to player inventory
@@ -201,7 +187,6 @@ public class BCDK {
 		// Can be moved have health changed with methods
 		NPCBehavior guard1 = new NPCBehavior(map, 10);
 
-		PlayerRocks.RockCount = 0;
 		// TODO: Print some sort of introduction about the game?
 
 		try (Scanner scanner = new Scanner(System.in)) {
