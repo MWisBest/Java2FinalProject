@@ -3,6 +3,7 @@ package bcdk.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import bcdk.BCDK;
 import bcdk.entity.Player;
 import bcdk.item.Inventory;
 import bcdk.item.Item;
@@ -108,6 +109,12 @@ public class GameMap {
 		System.out.println("You move to the " + dir.toString());
 		System.out.println(nextRoom.getEnterDescription());
 		player.setLocation(nextRoom);
+		
+		// fail state: if player goes to a guard and doesn't have a weapon, they die
+		if (nextRoom.equals(guards) && player.getInventory().getWeaponCount() == 0) {
+			System.out.println("You have no weapons to defend yourself from the guard in this room! Game over!");
+			BCDK.RUNNING = false;
+		}
 	}
 	
 	public void pickupItems(Player player) {
