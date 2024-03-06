@@ -11,13 +11,16 @@ public class GameMap {
 	
 	private List<Room> roomList = new ArrayList<>();
 	
+	public Checkpoint rockThrown = new Checkpoint("RockThrow");
+	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
+	
 	public GameMap() {
 		Room startWest = new Room("1W");
 		Room central = new Room("Center");
 		Room centralNorth = new Room("2N");
 		Room centralSouth = new Room("2S");
-		Room guards = new Room("3E");
-		Room exit = new Room("Exit");
+		Room guards = new Room("3E", rockThrown);
+		Room exit = new Room("Exit", keyAcquired);
 		
 		centralNorth.addFloorItem(new Weapon("Axe", "Good handle, Good for quick attacks", 5));
 		centralSouth.addFloorItem(new Weapon("Sword", "A nice, sharp blade. I can definetly use this.", 8));

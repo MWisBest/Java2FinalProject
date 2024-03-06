@@ -13,11 +13,18 @@ public class Room {
 	
 	private String name;
 	
+	private Checkpoint requiredCP;
+	
 	// Don't make a new set unless we need to, rooms will not always have items
 	private List<Item> items = null;
 	
 	public Room(String name) {
 		this.name = name;
+	}
+	
+	public Room(String name, Checkpoint requiredCP) {
+		this.name = name;
+		this.requiredCP = requiredCP;
 	}
 	
 	public void addFloorItem(Item item) {
@@ -75,5 +82,9 @@ public class Room {
 	public static void createNorthSouthPair(Room r1, Room r2) {
 		r1.setSouth(r2);
 		r2.setNorth(r1);
+	}
+
+	public Checkpoint getRequiredCheckpoint() {
+		return requiredCP;
 	}
 }

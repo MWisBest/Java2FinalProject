@@ -1,6 +1,9 @@
 package bcdk.entity;
 
-import bcdk.map.GameMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import bcdk.map.Checkpoint;
 import bcdk.map.Room;
 
 /*
@@ -18,6 +21,8 @@ public class Player extends Entities {
 	private int HealAmount;
 	
 	private Room location;
+	
+	private Set<Checkpoint> checkpointsReached;
 
 	/**
 	 * class constructor
@@ -28,6 +33,20 @@ public class Player extends Entities {
 	 */
 	public Player(String name, int health, int extraDmg) {
 		super(name, health, extraDmg); // the derived variables
+		this.checkpointsReached = new HashSet<>();
+	}
+	
+	public void addCheckpointReached(Checkpoint checkpoint) {
+		this.checkpointsReached.add(checkpoint);
+	}
+	
+	public boolean checkForCheckpoint(Checkpoint checkpoint) {
+		for (Checkpoint cp : this.checkpointsReached) {
+			if (cp.equals(checkpoint)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
