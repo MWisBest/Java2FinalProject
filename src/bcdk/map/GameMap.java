@@ -117,6 +117,10 @@ public class GameMap {
 		} else if(nextRoom.equals(guards)) { // player had a weapon
 			System.out.println("You use your weapon to defeat the guard in this room to advance further.");
 			System.out.println("The guard you defeated dropped something!");
+		} else if(nextRoom.equals(exit)) {
+			System.out.println("You defeat the final guard with your weapon.");
+			System.out.println("Congratulations, you completed BCDK!");
+			BCDK.RUNNING = false;
 		}
 	}
 	
