@@ -114,6 +114,9 @@ public class GameMap {
 		if (nextRoom.equals(guards) && player.getInventory().getWeaponCount() == 0) {
 			System.out.println("You have no weapons to defend yourself from the guard in this room! Game over!");
 			BCDK.RUNNING = false;
+		} else if(nextRoom.equals(guards)) { // player had a weapon
+			System.out.println("You use your weapon to defeat the guard in this room to advance further.");
+			System.out.println("The guard you defeated dropped something!");
 		}
 	}
 	
@@ -129,6 +132,7 @@ public class GameMap {
 				} else if (i instanceof Key) {
 					playerInventory.addKey((Key)i);
 					System.out.println("You picked up a key!");
+					player.addCheckpointReached(keyAcquired);
 				} else if (i instanceof Weapon) {
 					playerInventory.addWeapons((Weapon)i);
 					System.out.println("You acquired a new weapon! Check your INVENTORY for details.");
