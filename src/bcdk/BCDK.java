@@ -23,18 +23,6 @@ public class BCDK {
 	static Player player = new Player("Player", 100, 0);
 	public static SaveGame savegame = null;
 
-	// Items
-	// Create items for testing, At the moment Just tells player that the item they
-	// use does not exist if they try to use it without finding it in the game
-	static Items.Key key1 = new Items.Key(); // Create Key object
-	static Items.Rocks PlayerRocks = new Items.Rocks();
-	static Weapons mace = new Items().new Weapons("Mace",
-			"A sturdy mace, someone must have gotten careless and left this out.\n", 5);
-	static Weapons Sword = new Items().new Weapons("Sword", "A nice, sharp blade, I can definetly use this.\n", 8);
-	static Weapons Axe = new Items().new Weapons("Axe", "Good handle, Good for quick attacks\n", 3);
-
-	// Inventory Creation
-	static Inventory PlayerInventory = new Inventory();
 
 	/**
 	 * Takes user input and attempts to process it.

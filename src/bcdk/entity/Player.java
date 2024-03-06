@@ -3,6 +3,7 @@ package bcdk.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import bcdk.item.Inventory;
 import bcdk.map.Checkpoint;
 import bcdk.map.Room;
 
@@ -23,6 +24,8 @@ public class Player extends Entities {
 	private Room location;
 	
 	private Set<Checkpoint> checkpointsReached;
+	
+	private Inventory playerInventory;
 
 	/**
 	 * class constructor
@@ -34,6 +37,7 @@ public class Player extends Entities {
 	public Player(String name, int health, int extraDmg) {
 		super(name, health, extraDmg); // the derived variables
 		this.checkpointsReached = new HashSet<>();
+		this.playerInventory = new Inventory();
 	}
 	
 	public void addCheckpointReached(Checkpoint checkpoint) {
@@ -94,5 +98,9 @@ public class Player extends Entities {
 
 	public void setLocation(Room room) {
 		this.location = room;
+	}
+
+	public Inventory getInventory() {
+		return playerInventory;
 	}
 }
