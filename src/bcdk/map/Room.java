@@ -12,18 +12,21 @@ public class Room {
 	private Room east;
 	
 	private String name;
+	private String enterDescription;
 	
 	private Checkpoint requiredCP;
 	
 	// Don't make a new set unless we need to, rooms will not always have items
 	private List<Item> items = null;
 	
-	public Room(String name) {
+	public Room(String name, String enterDescription) {
 		this.name = name;
+		this.enterDescription = enterDescription;
 	}
 	
-	public Room(String name, Checkpoint requiredCP) {
+	public Room(String name, String enterDescription, Checkpoint requiredCP) {
 		this.name = name;
+		this.enterDescription = enterDescription;
 		this.requiredCP = requiredCP;
 	}
 	

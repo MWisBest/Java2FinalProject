@@ -18,12 +18,12 @@ public class GameMap {
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
 	
 	public GameMap() {
-		Room startWest = new Room("1W");
-		Room central = new Room("Center");
-		Room centralNorth = new Room("2N");
-		Room centralSouth = new Room("2S");
-		Room guards = new Room("3E", rockThrown);
-		Room exit = new Room("Exit", keyAcquired);
+		Room startWest = new Room("1W", "You awake in a dark brick building.");
+		Room central = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
+		Room centralNorth = new Room("2N", "You have stumbled into a maintenance closet of some sort.");
+		Room centralSouth = new Room("2S", "You've discovered an armory!");
+		Room guards = new Room("3E", "You've found the path to the exit!\nA guard has spotted you.", rockThrown);
+		Room exit = new Room("Exit", "One final guard stands between you and the exit", keyAcquired);
 		
 		centralNorth.addFloorItem(new Weapon("Axe", "Good handle, Good for quick attacks", 5));
 		centralSouth.addFloorItem(new Weapon("Sword", "A nice, sharp blade. I can definetly use this.", 8));
