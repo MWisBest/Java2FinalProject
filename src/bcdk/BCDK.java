@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import bcdk.entity.Combat;
 import bcdk.entity.Enemy;
 import bcdk.entity.Entities;
-import bcdk.entity.NPCBehavior;
 import bcdk.entity.Player;
 import bcdk.item.Inventory;
 import bcdk.map.Direction;
@@ -212,9 +211,6 @@ public class BCDK {
 
 		// Set player initial position.
 		player.setLocation(map.getInitialRoom());
-		// create guard with 10 health that uses current map
-		// Can be moved have health changed with methods
-		NPCBehavior guard1 = new NPCBehavior(map, 10);
 
 		// TODO: Print some sort of introduction about the game?
 
