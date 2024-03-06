@@ -93,6 +93,10 @@ public class Inventory {
 	public int getRockCount() {
 		return this.rocks.size();
 	}
+	
+	public int getKeyCount() {
+		return this.keys.size();
+	}
 
 	/**
 	 * Modified so returns amount of keys once allow player to see how many keys

@@ -104,9 +104,13 @@ public class BCDK {
 				}
 				switch (input[2]) {
 				case "KEY":
-					// key1.UseKey(); // For now placeholder text. In future if used next to locked
-					// door, then opens
-					// that door.
+					if (player.getLocation().equals(map.exit)) {
+						System.out.println("You use the key to leave the castle!");
+						System.out.println("Congratulations, you've completed the game!");
+						break;
+					} else {
+						System.out.println("There doesn't seem to be any use for your key in this location.");
+					}
 					break;
 				case "ROCK":
 				case "ROCKS":
@@ -121,7 +125,11 @@ public class BCDK {
 							System.out.println("You throw a rock far to the east.");
 							System.out.println("One of the two guards to the east went away to check out the noise!");
 							System.out.println("Checkpoint reached!");
+						} else {
+							System.out.println("There doesn't seem to be any use for your rocks in this location.");
 						}
+					} else {
+						System.out.println("You don't have any rocks to use.");
 					}
 					break;
 				default:
