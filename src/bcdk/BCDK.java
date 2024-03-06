@@ -1,6 +1,9 @@
 package bcdk;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
@@ -213,6 +216,26 @@ public class BCDK {
 		player.setLocation(map.getInitialRoom());
 
 		// TODO: Print some sort of introduction about the game?
+		
+		LocalTime time = LocalTime.now();
+		int hour = time.getHour();
+		int minute = time.getMinute();
+		int lang = -1;
+		
+		String greeting = "";
+		if(hour < 6 || (hour == 6 && minute == 0)) {
+			greeting = "Are you just going to bed or just waking up?";
+		} else if(hour < 12) {
+			greeting = "Good morning!";
+		} else if(hour == 12) {
+			greeting = "Having a good lunch break?";
+		} else if(hour < 21) {
+			greeting = "Good afternoon!";
+		} else {
+			greeting = "Good evening!";
+		}
+
+		System.out.println(greeting);
 
 		try (Scanner scanner = new Scanner(System.in)) {
 			try {
