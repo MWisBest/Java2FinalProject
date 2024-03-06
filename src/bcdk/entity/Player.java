@@ -11,16 +11,7 @@ import bcdk.map.Room;
  * represents the player who will play the game. 
  */
 public class Player extends Entities {
-	/**
-	 * the cooldown of the heal ability
-	 */
-	private int HealCooldown = 100;
 
-	/**
-	 * the amount that player can heal
-	 */
-	private int HealAmount;
-	
 	private Room location;
 	
 	private Set<Checkpoint> checkpointsReached;
@@ -51,45 +42,6 @@ public class Player extends Entities {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * gets the amount of cooldown to go before healing is available
-	 * 
-	 * @return cooldown amount
-	 */
-	public int getHealCoolDown() {
-		return HealCooldown;
-	}
-
-	/**
-	 * reduce the amount of cooldown needed before healing becomes available
-	 */
-	public void ChangeCoolDown() {
-		HealCooldown -= 20;
-	}
-
-	/**
-	 * reset cool down back to 0
-	 */
-	public void resetCoolDown() {
-		HealCooldown = 100;
-	}
-
-	/**
-	 * changes the amount of healing that player can do
-	 */
-	public void setHealAmount() {
-		HealAmount = GetHealth() / 3;
-	}
-
-	/**
-	 * gets the amount that the player can heal
-	 * 
-	 * @return - heal amunt
-	 */
-	public int getHealAmount() {
-		return HealAmount;
 	}
 
 	public Room getLocation() {
