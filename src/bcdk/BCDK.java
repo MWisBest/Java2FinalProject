@@ -10,6 +10,7 @@ import bcdk.entity.Enemy;
 import bcdk.entity.Entities;
 import bcdk.entity.NPCBehavior;
 import bcdk.entity.Player;
+import bcdk.item.Inventory;
 import bcdk.map.Direction;
 import bcdk.map.GameMap;
 
@@ -109,7 +110,19 @@ public class BCDK {
 					break;
 				case "ROCK":
 				case "ROCKS":
-
+					if (player.checkForCheckpoint(map.rockThrown)) {
+						System.out.println("You have no further use for rocks.");
+						break;
+					}
+					Inventory inv = player.getInventory();
+					if (inv.getRockCount() > 0) {
+						if (player.getLocation().equals(map.central)) {
+							player.addCheckpointReached(map.rockThrown);
+							System.out.println("You throw a rock far to the east.");
+							System.out.println("One of the two guards to the east went away to check out the noise!");
+							System.out.println("Checkpoint reached!");
+						}
+					}
 					break;
 				default:
 					ret.append("Usage: INVENTORY USE [KEY/ROCK]");

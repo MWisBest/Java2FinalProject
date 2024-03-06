@@ -89,6 +89,10 @@ public class Inventory {
 		this.weapons.remove(weapons);
 		// sort not required on remove
 	}
+	
+	public int getRockCount() {
+		return this.rocks.size();
+	}
 
 	/**
 	 * Modified so returns amount of keys once allow player to see how many keys

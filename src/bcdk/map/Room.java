@@ -90,4 +90,8 @@ public class Room {
 	public Checkpoint getRequiredCheckpoint() {
 		return requiredCP;
 	}
+
+	public String getEnterDescription() {
+		return enterDescription;
+	}
 }

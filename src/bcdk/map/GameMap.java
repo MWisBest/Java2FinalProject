@@ -17,14 +17,15 @@ public class GameMap {
 	public Checkpoint rockThrown = new Checkpoint("RockThrow");
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
 	
+	public Room startWest = new Room("1W", "You awake in a dark brick building.");
+	public Room central = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
+	public Room centralNorth = new Room("2N", "You have stumbled into a maintenance closet of some sort.");
+	public Room centralSouth = new Room("2S", "You've discovered an armory!");
+	public Room guards = new Room("3E", "You've found the path to the exit!\nA guard has spotted you.", rockThrown);
+	public Room exit = new Room("Exit", "One final guard stands between you and the exit", keyAcquired);
+	
+	
 	public GameMap() {
-		Room startWest = new Room("1W", "You awake in a dark brick building.");
-		Room central = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
-		Room centralNorth = new Room("2N", "You have stumbled into a maintenance closet of some sort.");
-		Room centralSouth = new Room("2S", "You've discovered an armory!");
-		Room guards = new Room("3E", "You've found the path to the exit!\nA guard has spotted you.", rockThrown);
-		Room exit = new Room("Exit", "One final guard stands between you and the exit", keyAcquired);
-		
 		centralNorth.addFloorItem(new Weapon("Axe", "Good handle, Good for quick attacks", 5));
 		centralSouth.addFloorItem(new Weapon("Sword", "A nice, sharp blade. I can definetly use this.", 8));
 		central.addFloorItem(new Rock());
@@ -105,6 +106,7 @@ public class GameMap {
 		}
 		
 		System.out.println("You move to the " + dir.toString());
+		System.out.println(nextRoom.getEnterDescription());
 		player.setLocation(nextRoom);
 	}
 	
