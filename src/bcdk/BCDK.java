@@ -98,7 +98,7 @@ public class BCDK {
 			case "USE":
 				switch (input[2]) {
 				case "KEY":
-					key1.UseKey(); // For now placeholder text. In future if used next to locked door, then opens
+					//key1.UseKey(); // For now placeholder text. In future if used next to locked door, then opens
 									// that door.
 					break;
 				case "ROCK":
@@ -107,16 +107,16 @@ public class BCDK {
 								// location
 					switch (input[3]) {
 					case "NORTH":
-						PlayerRocks.Throw("north");
+						//PlayerRocks.Throw("north");
 						break;
 					case "SOUTH":
-						PlayerRocks.Throw("south");
+						//PlayerRocks.Throw("south");
 						break;
 					case "WEST":
-						PlayerRocks.Throw("west");
+						//PlayerRocks.Throw("west");
 						break;
 					case "EAST":
-						PlayerRocks.Throw("east");
+						//PlayerRocks.Throw("east");
 						break;
 					default:
 						break;
@@ -129,15 +129,15 @@ public class BCDK {
 			case "EXAMINE":
 				switch (input[2]) {
 				case "KEY":
-					PlayerInventory.displayKeys();
+					player.getInventory().displayKeys();
 					break;
 				case "ROCK":
 				case "ROCKS":
-					PlayerInventory.displayRocks(); // Tell player how many rocks they have
+					player.getInventory().displayRocks(); // Tell player how many rocks they have
 					break;
 				case "WEAPON":
 				case "WEAPONS":
-					PlayerInventory.displayWeapons();
+					player.getInventory().displayWeapons();
 				}
 
 			}
@@ -147,7 +147,7 @@ public class BCDK {
 		case "F":
 		case "FIGHT":
 			Enemy npc = new Enemy("Enemy", 100, 0);
-			Combat fight = new Combat(player, npc, PlayerInventory);
+			Combat fight = new Combat(player, npc, player.getInventory());
 			Entities winner = fight.FightWinner();
 			// determine which entity won the fight based on the winner variable
 			if (winner.GetName().equals(player.GetName())) {
@@ -167,7 +167,13 @@ public class BCDK {
 		case "RESTART":
 			if (input.length == 2 && input[1].equals("PLEASE")) {
 				// TODO: Actually clear save data and restart the game.
-				ret.append("Clearing save data and restarting the game!");
+				ret.append("Clearing save data! Restart the game afterwards.");
+				try {
+					savegame.deleteSaveData();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				RUNNING = false;
 			} else {
 				ret.append("Usage: RESTART PLEASE. Clears your saved data and restarts the game.");
 			}

@@ -30,6 +30,7 @@ public class SaveGame implements AutoCloseable {
 			// rs.next ran, so it moved to the first (and only) result
 			int curVersion = rs.getInt("VERSION");
 			if (curVersion != VERSION) {
+				rs.close();
 				// version mismatch, also create the database
 				BCDK.logger.trace("SaveGame: Database was old version, deleting and re-making");
 				this.createDB();
@@ -41,16 +42,17 @@ public class SaveGame implements AutoCloseable {
 	}
 
 	private void createDB() throws SQLException {
+		deleteSaveData();
+		
 		Statement stmt = this.dbConnection.createStatement();
-
-		// drop tables
-		stmt.executeUpdate("DROP TABLE IF EXISTS DBINFO");
 
 		// create tables
 		stmt.executeUpdate("CREATE TABLE DBINFO (VERSION INTEGER PRIMARY KEY)");
 
 		// fill in version number
 		stmt.executeUpdate("INSERT INTO DBINFO VALUES(" + VERSION + ")");
+		
+		stmt.close();
 	}
 
 	@Override
@@ -58,6 +60,16 @@ public class SaveGame implements AutoCloseable {
 		if (this.dbConnection != null) {
 			this.dbConnection.close();
 		}
+	}
+	
+	public void deleteSaveData() throws SQLException {
+		Statement stmt = this.dbConnection.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM sqlite_master WHERE type='table';");
+		while (rs.next()) {
+			stmt.execute("DROP TABLE " + rs.getString("tbl_name"));
+		}
+		
+		stmt.close();
 	}
 
 	class VersionMismatchException extends RuntimeException {
