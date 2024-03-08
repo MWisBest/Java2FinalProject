@@ -31,6 +31,11 @@ public class Room {
 		this.requiredCP = requiredCP;
 	}
 	
+	/**
+	 * Add an item to the floor of this room.
+	 * 
+	 * @param item Item to place on the floor.
+	 */
 	public void addFloorItem(Item item) {
 		if (this.items == null) {
 			this.items = new ArrayList<>();
@@ -38,10 +43,16 @@ public class Room {
 		this.items.add(item);
 	}
 	
+	/**
+	 * @return the List of Item on the floor of this room.
+	 */
 	public List<Item> getFloorItems() {
 		return this.items;
 	}
 
+	/**
+	 * @return the Room to the North of this room, or null
+	 */
 	public Room getNorth() {
 		return north;
 	}
@@ -50,6 +61,9 @@ public class Room {
 		this.north = north;
 	}
 
+	/**
+	 * @return the Room to the South of this room, or null
+	 */
 	public Room getSouth() {
 		return south;
 	}
@@ -58,6 +72,9 @@ public class Room {
 		this.south = south;
 	}
 
+	/**
+	 * @return the Room to the West of this room, or null
+	 */
 	public Room getWest() {
 		return west;
 	}
@@ -66,6 +83,9 @@ public class Room {
 		this.west = west;
 	}
 
+	/**
+	 * @return the Room to the East of this room, or null
+	 */
 	public Room getEast() {
 		return east;
 	}
@@ -74,24 +94,43 @@ public class Room {
 		this.east = east;
 	}
 
+	/**
+	 * @return the name of this room
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Creates a link between two rooms in the horizontal direction.
+	 * @param r1 West Room
+	 * @param r2 East Room
+	 */
 	public static void createWestEastPair(Room r1, Room r2) {
 		r1.setEast(r2);
 		r2.setWest(r1);
 	}
 	
+	/**
+	 * Creates a link between two rooms in the vertical direction.
+	 * @param r1 North Room
+	 * @param r2 South Room
+	 */
 	public static void createNorthSouthPair(Room r1, Room r2) {
 		r1.setSouth(r2);
 		r2.setNorth(r1);
 	}
 
+	/**
+	 * @return the Checkpoint required to enter this room, or null for no requirement
+	 */
 	public Checkpoint getRequiredCheckpoint() {
 		return requiredCP;
 	}
 
+	/**
+	 * @return the description of this room
+	 */
 	public String getEnterDescription() {
 		return enterDescription;
 	}
