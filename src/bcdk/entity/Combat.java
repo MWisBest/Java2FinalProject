@@ -51,18 +51,18 @@ public class Combat {
 		Scanner scanner2 = new Scanner(System.in);
 
 		// the fight will go on until either the player or the enemy is dead.
-		while (Player.IsAlive() && NPC.IsAlive()) {
+		while (Player.isAlive() && NPC.isAlive()) {
 
 			boolean Defend = false;// determines if the damage from enemy should be halfed
 			Boolean SkipEnemyTurn = false; // determine if enemy turn should be skipped
 
 			if (NPC.getSpecialCharge() == 60) {
-				System.out.println(NPC.GetName() + " will use special attack on his next turn");
+				System.out.println(NPC.getName() + " will use special attack on his next turn");
 			}
 
 			// give player current status of the battle and their available options
-			System.out.println("Player health: " + Player.GetHealth());
-			System.out.println("Enemy health: " + NPC.GetHealth());
+			System.out.println("Player health: " + Player.getHealth());
+			System.out.println("Enemy health: " + NPC.getHealth());
 			System.out.println(
 					"Attack will cause max damage to enemy. Defend will only give you half normal enemy damage on his next turn");
 			System.out.println("Enter 'A' to attack  \n" + "Enter 'D' to defend \n" + "Enter 'H' to heal \n"
@@ -72,8 +72,8 @@ public class Combat {
 
 			// player attacks enemy with full damage
 			if (input.equalsIgnoreCase("A")) {
-				int playerDmg = Player.GetDamage();
-				NPC.TakeDamage(playerDmg);
+				int playerDmg = Player.getDamage();
+				NPC.takeDamage(playerDmg);
 				System.out.println("Player attacks NPC for " + playerDmg + " damage.");
 			}
 			// player defends so enemy does not harm them as much
@@ -92,7 +92,7 @@ public class Combat {
 			}
 
 			// if enemy is not killed by player, the get to attack back.
-			if (NPC.IsAlive() && !SkipEnemyTurn) {
+			if (NPC.isAlive() && !SkipEnemyTurn) {
 				NPC.IncreaseSpecial();
 				int npcDamage = 0;
 				boolean isSpecialAttack = false;
@@ -107,9 +107,9 @@ public class Combat {
 				if (!isSpecialAttack) {
 					// determines the amount of damage to cause to the player
 					if (Defend) {
-						npcDamage = NPC.GetDamage() / 2;
+						npcDamage = NPC.getDamage() / 2;
 					} else {
-						npcDamage = NPC.GetDamage();
+						npcDamage = NPC.getDamage();
 					}
 				} else {
 					if (Defend) {
@@ -118,7 +118,7 @@ public class Combat {
 				}
 
 				// health is reduced from the player
-				Player.TakeDamage(npcDamage);
+				Player.takeDamage(npcDamage);
 				System.out.println("NPC attacks player for " + npcDamage + " damage.\n\n");
 			}
 
@@ -127,11 +127,11 @@ public class Combat {
 		scanner2.close();
 
 		// determines output based on who won the fight
-		if (Player.IsAlive()) {
-			System.out.println(NPC.GetName() + " has been defeated");
+		if (Player.isAlive()) {
+			System.out.println(NPC.getName() + " has been defeated");
 			return Player;
 		} else {
-			System.out.println(Player.GetName() + " has been defeated");
+			System.out.println(Player.getName() + " has been defeated");
 			return NPC;
 		}
 	}
@@ -143,10 +143,10 @@ public class Combat {
 	 */
 	private void ChangeWeapon(Scanner scanner) {
 		Inv.displayWeapons();
-		int max = Inv.WeaponCount();
+		int max = Inv.getWeaponCount();
 
 		// only allow weapon change if the player has at least 1 weapon
-		if (Inv.WeaponCount() > 0) {
+		if (Inv.getWeaponCount() > 0) {
 			System.out.println("Which weapon will you use? (Type number):");
 			String inputz = scanner.nextLine();
 
@@ -154,8 +154,8 @@ public class Combat {
 				int inputx = Integer.parseInt(inputz);
 				// verify that use input falls within the available weapons
 				if (inputx >= 1 && inputx <= max) {
-					UserWeapon = Inv.GetWeapons().get(inputx - 1);
-					Player.SetDamage(UserWeapon.getDamage());
+					UserWeapon = Inv.getWeapons().get(inputx - 1);
+					Player.setDamage(UserWeapon.getDamage());
 				} else {
 					// inform player when they make an invalid weapon choice
 					System.out.println("Please enter a number between 1 and " + max + "\n");

@@ -61,6 +61,6 @@ public class Enemy extends Entities {
 	 * sets the damage of the special attack
 	 */
 	public void SetSpecialDmg() {
-		SpecialAttackDmg = GetHealth() / 3;
+		SpecialAttackDmg = getHealth() / 3;
 	}
 }

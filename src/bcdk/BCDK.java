@@ -173,7 +173,7 @@ public class BCDK {
 			Combat fight = new Combat(player, npc, player.getInventory());
 			Entities winner = fight.FightWinner();
 			// determine which entity won the fight based on the winner variable
-			if (winner.GetName().equals(player.GetName())) {
+			if (winner.getName().equals(player.getName())) {
 				System.out.println("Battle ended");
 				winner = null;
 			} else {

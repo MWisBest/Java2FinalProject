@@ -97,6 +97,11 @@ public class Inventory {
 		return this.keys.size();
 	}
 	
+	/**
+	 * counts the amount of weapons that the player has in their inventory
+	 * 
+	 * @return - weapon count
+	 */
 	public int getWeaponCount() {
 		return this.weapons.size();
 	}
@@ -139,21 +144,11 @@ public class Inventory {
 	}
 
 	/**
-	 * counts the amount of weapons that the player has in their inventory
-	 * 
-	 * @return - weapon count
-	 */
-	public int WeaponCount() {
-		return weapons.size();
-	}
-
-	/**
 	 * get the array of weapons that player has so he can pick during combat
 	 * 
 	 * @return - array of weapons
 	 */
-	public List<Weapon> GetWeapons() {
+	public List<Weapon> getWeapons() {
 		return weapons;
 	}
-
 }

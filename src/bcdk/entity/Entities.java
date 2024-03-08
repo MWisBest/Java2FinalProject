@@ -7,27 +7,27 @@ public class Entities {
 	/**
 	 * the amount of health of this entity
 	 */
-	private int Health;
+	private int health;
 
 	/**
 	 * the name given to this entity
 	 */
-	private String Name;
+	private String name;
 
 	/**
 	 * the amount of total damage that this entity can cause
 	 */
-	private int Damage;
+	private int damage;
 
 	/**
 	 * the amount of extra damage caused by this entity
 	 */
-	private int ExtraDamage = 0;
+	private int extraDamage = 0;
 
 	/**
 	 * the base damage of all entities
 	 */
-	private int BaseDamage = 5;
+	private int baseDamage = 5;
 
 	/**
 	 * class constructor
@@ -37,12 +37,12 @@ public class Entities {
 	 * @param extraDmg - extradamage given to entity
 	 */
 	public Entities(String name, int health, int extraDmg) {
-		this.Health = health;
-		this.Name = name;
-		this.ExtraDamage = extraDmg;
+		this.health = health;
+		this.name = name;
+		this.extraDamage = extraDmg;
 
 		// sets total damage of entity
-		this.Damage = BaseDamage + ExtraDamage;
+		this.damage = baseDamage + extraDamage;
 	}
 
 	/**
@@ -50,8 +50,8 @@ public class Entities {
 	 * 
 	 * @return - health amount
 	 */
-	public int GetHealth() {
-		return Health;
+	public int getHealth() {
+		return health;
 	}
 
 	/**
@@ -59,8 +59,8 @@ public class Entities {
 	 * 
 	 * @return - entity name
 	 */
-	public String GetName() {
-		return Name;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -68,8 +68,8 @@ public class Entities {
 	 * 
 	 * @return - total damage
 	 */
-	public int GetDamage() {
-		return Damage;
+	public int getDamage() {
+		return damage;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class Entities {
 	 * 
 	 * @return - extra damage
 	 */
-	public int GetExtraDamage() {
-		return ExtraDamage;
+	public int getExtraDamage() {
+		return extraDamage;
 	}
 
 	/**
@@ -86,11 +86,11 @@ public class Entities {
 	 * 
 	 * @param dmg - extra damage
 	 */
-	public void SetDamage(int dmg) {
-		ExtraDamage = dmg;
+	public void setDamage(int dmg) {
+		extraDamage = dmg;
 
 		// automatically update the total damage
-		Damage = BaseDamage + ExtraDamage;
+		damage = baseDamage + extraDamage;
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class Entities {
 	 * 
 	 * @return - alive status
 	 */
-	public boolean IsAlive() {
-		return Health > 0;
+	public boolean isAlive() {
+		return health > 0;
 	}
 
 	/**
@@ -107,11 +107,11 @@ public class Entities {
 	 * 
 	 * @param dmg - amount to reduce from entity health
 	 */
-	public void TakeDamage(int dmg) {
-		Health -= dmg;
+	public void takeDamage(int dmg) {
+		health -= dmg;
 	}
 
-	public void AddHealth(int amt) {
-		Health += amt;
+	public void addHealth(int amt) {
+		health += amt;
 	}
 }
