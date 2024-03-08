@@ -12,6 +12,7 @@ public class Weapon extends Item implements Comparable<Weapon> {
 		return this.damage;
 	}
 
+	// 3.4 - use of Comparable interface
 	@Override
 	public int compareTo(Weapon o) {
 		return o.damage - this.damage;

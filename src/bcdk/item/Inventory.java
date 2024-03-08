@@ -28,7 +28,7 @@ public class Inventory {
 	 * class constructor. initiate track of items
 	 */
 	public Inventory() {
-		this.keys = new ArrayList<>();
+		this.keys = new ArrayList<>(); // 3.2 - example of ArrayList
 		this.rocks = new ArrayList<>();
 		this.weapons = new ArrayList<>();
 	}
@@ -128,7 +128,7 @@ public class Inventory {
 		// only runs if statement if player has at least 1 weapon
 		if (!weapons.isEmpty()) {
 			int count = 1;
-			for (Weapon weapon : weapons) {
+			for (Weapon weapon : weapons) { // 3.5 - example of a foreach statement
 				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
 				count++;
 			}

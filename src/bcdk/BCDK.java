@@ -237,6 +237,8 @@ public class BCDK {
 
 		System.out.println(greeting);
 
+		// 6.1 - proper use of try-catch blocks
+		// 6.4 - use of try-with-resources block
 		try (Scanner scanner = new Scanner(System.in)) {
 			try {
 				savegame = new SaveGame("bcdk");
@@ -245,6 +247,7 @@ public class BCDK {
 				logger.error(e);
 				System.out.println("Error initializing savegame data. Saving will be unavailable.");
 				savegame = null;
+			// 6.3 - use of custom exception
 			} catch (SaveGame.VersionMismatchException e) {
 				System.out.println(
 						"Your previous savegame uses an old format that is not compatible with this version, your progress was reset.");
@@ -252,6 +255,7 @@ public class BCDK {
 			}
 
 			while (RUNNING) {
+				// 8.1 - reading/writing to console
 				System.out.print("> ");
 
 				String input = scanner.nextLine().toUpperCase();
@@ -267,7 +271,7 @@ public class BCDK {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e);
-		} finally {
+		} finally { // 6.2 - use of finally block
 			System.out.println("Thank you for playing!");
 			try {
 				if (savegame != null) {
