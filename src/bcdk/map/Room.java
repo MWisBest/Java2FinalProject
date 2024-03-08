@@ -24,6 +24,7 @@ public class Room {
 		this.enterDescription = enterDescription;
 	}
 	
+	// 1.3 - use of overloaded constructor
 	public Room(String name, String enterDescription, Checkpoint requiredCP) {
 		this.name = name;
 		this.enterDescription = enterDescription;

@@ -72,6 +72,7 @@ public class SaveGame implements AutoCloseable {
 		stmt.close();
 	}
 
+	// 1.7 - use of nested class
 	// 6.3 - creation of custom exception
 	class VersionMismatchException extends RuntimeException {
 		private static final long serialVersionUID = -5244452174323513L;

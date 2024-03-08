@@ -16,4 +16,12 @@ public abstract class Item {
 	public String getFullDescription() {
 		return this.description;
 	}
+	
+	
+	// 1.4a - override toString
+	// 1.9 - use of override annotation
+	@Override
+	public String toString() {
+		return this.name + ": " + this.description;
+	}
 }

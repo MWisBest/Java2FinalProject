@@ -15,8 +15,10 @@ public class GameMap {
 	
 	private List<Room> roomList = new ArrayList<>();
 	
+	// 1.4 - example of final
+	// 1.5 - proper use of static keyword
 	// 2.3 - example of singleton pattern
-	private static GameMap INSTANCE = null;
+	private static final GameMap INSTANCE = new GameMap();
 	
 	public Checkpoint rockThrown = new Checkpoint("RockThrow");
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
@@ -51,9 +53,6 @@ public class GameMap {
 	}
 	
 	public static GameMap getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new GameMap();
-		
 		return INSTANCE;
 	}
 	
