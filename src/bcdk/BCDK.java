@@ -2,8 +2,6 @@ package bcdk;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
-import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.Logger;
@@ -220,7 +218,6 @@ public class BCDK {
 		LocalTime time = LocalTime.now();
 		int hour = time.getHour();
 		int minute = time.getMinute();
-		int lang = -1;
 		
 		String greeting = "";
 		if(hour < 6 || (hour == 6 && minute == 0)) {

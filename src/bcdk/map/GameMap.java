@@ -129,6 +129,7 @@ public class GameMap {
 		List<Item> floorItems = curRoom.getFloorItems();
 		if (floorItems != null && floorItems.size() > 0) {
 			Inventory playerInventory = player.getInventory();
+			// 3.5 - example of foreach statement
 			for (Item i : floorItems) {
 				if (i instanceof Rock) {
 					playerInventory.addRocks((Rock)i);
