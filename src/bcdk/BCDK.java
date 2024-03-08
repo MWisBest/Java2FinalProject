@@ -20,7 +20,7 @@ public class BCDK {
 	public static boolean RUNNING = true;
 	public static Logger logger = LogManager.getLogger(BCDK.class);
 	static Player player = new Player("Player", 100, 0);
-	static GameMap map = new GameMap();
+	static GameMap map = GameMap.getInstance();
 	public static SaveGame savegame = null;
 
 	/**
@@ -104,7 +104,7 @@ public class BCDK {
 				}
 				switch (input[2]) {
 				case "KEY":
-					if (player.getLocation().equals(map.exit)) {
+					if (player.getLocation().equals(map.getRoomByName("Exit"))) {
 						System.out.println("You use the key to leave the castle!");
 						System.out.println("Congratulations, you've completed the game!");
 						break;
@@ -120,7 +120,7 @@ public class BCDK {
 					}
 					Inventory inv = player.getInventory();
 					if (inv.getRockCount() > 0) {
-						if (player.getLocation().equals(map.central)) {
+						if (player.getLocation().equals(map.getRoomByName("Center"))) {
 							player.addCheckpointReached(map.rockThrown);
 							System.out.println("You throw a rock far to the east.");
 							System.out.println("One of the two guards to the east went away to check out the noise!");

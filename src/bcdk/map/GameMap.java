@@ -15,18 +15,20 @@ public class GameMap {
 	
 	private List<Room> roomList = new ArrayList<>();
 	
+	// 2.3 - example of singleton pattern
+	private static GameMap INSTANCE = null;
+	
 	public Checkpoint rockThrown = new Checkpoint("RockThrow");
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
 	
-	public Room startWest = new Room("1W", "You awake in a dark brick building.");
-	public Room central = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
-	public Room centralNorth = new Room("2N", "You have stumbled into a maintenance closet of some sort.");
-	public Room centralSouth = new Room("2S", "You've discovered an armory!");
-	public Room guards = new Room("3E", "You've found the path to the exit!\nA guard has spotted you.", rockThrown);
-	public Room exit = new Room("Exit", "One final guard stands between you and the exit", keyAcquired);
-	
-	
-	public GameMap() {
+	private GameMap() {
+		Room startWest = new Room("1W", "You awake in a dark brick building.");
+		Room central = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
+		Room centralNorth = new Room("2N", "You have stumbled into a maintenance closet of some sort.");
+		Room centralSouth = new Room("2S", "You've discovered an armory!");
+		Room guards = new Room("3E", "You've found the path to the exit!\nA guard has spotted you.", rockThrown);
+		Room exit = new Room("Exit", "One final guard stands between you and the exit", keyAcquired);
+		
 		centralNorth.addFloorItem(new Weapon("Axe", "Good handle, Good for quick attacks", 5));
 		centralSouth.addFloorItem(new Weapon("Sword", "A nice, sharp blade. I can definetly use this.", 8));
 		central.addFloorItem(new Rock());
@@ -46,6 +48,13 @@ public class GameMap {
 		roomList.add(centralSouth);
 		roomList.add(guards);
 		roomList.add(exit);
+	}
+	
+	public static GameMap getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new GameMap();
+		
+		return INSTANCE;
 	}
 	
 	public List<Room> getRoomList() {
@@ -111,13 +120,13 @@ public class GameMap {
 		player.setLocation(nextRoom);
 		
 		// fail state: if player goes to a guard and doesn't have a weapon, they die
-		if (nextRoom.equals(guards) && player.getInventory().getWeaponCount() == 0) {
+		if (nextRoom.equals(getRoomByName("3E")) && player.getInventory().getWeaponCount() == 0) {
 			System.out.println("You have no weapons to defend yourself from the guard in this room! Game over!");
 			BCDK.RUNNING = false;
-		} else if(nextRoom.equals(guards)) { // player had a weapon
+		} else if(nextRoom.equals(getRoomByName("3E"))) { // player had a weapon
 			System.out.println("You use your weapon to defeat the guard in this room to advance further.");
 			System.out.println("The guard you defeated dropped something!");
-		} else if(nextRoom.equals(exit)) {
+		} else if(nextRoom.equals(getRoomByName("Exit"))) {
 			System.out.println("You defeat the final guard with your weapon.");
 			System.out.println("Congratulations, you completed BCDK!");
 			BCDK.RUNNING = false;
