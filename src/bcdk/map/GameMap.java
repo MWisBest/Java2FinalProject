@@ -52,14 +52,26 @@ public class GameMap {
 		roomList.add(exit);
 	}
 	
+	/**
+	 * @return the singleton instance of this class.
+	 */
 	public static GameMap getInstance() {
 		return INSTANCE;
 	}
 	
+	/**
+	 * @return List of all rooms on the map
+	 */
 	public List<Room> getRoomList() {
 		return roomList;
 	}
 	
+	/**
+	 * Searches the map for a Room with a given name.
+	 * 
+	 * @param name Room name to look for
+	 * @return Room found, or null if no Room was found
+	 */
 	public Room getRoomByName(String name) {
 		for (Room r : roomList) {
 			if (r.getName().equals(name)) {
@@ -70,10 +82,19 @@ public class GameMap {
 		return null;
 	}
 	
+	/**
+	 * @return the Room the Player starts in.
+	 */
 	public Room getInitialRoom() {
 		return roomList.get(0);
 	}
 	
+	/**
+	 * Attempts to move the Player to a different room.
+	 * 
+	 * @param dir Direction to attempt to move the Player
+	 * @param player the Player to move
+	 */
 	public void move(Direction dir, Player player) {
 		Room curRoom = player.getLocation();
 		Room nextRoom = null;
@@ -132,6 +153,11 @@ public class GameMap {
 		}
 	}
 	
+	/**
+	 * Picks up items off the floor of the Player's current room and adds them to their inventory.
+	 * 
+	 * @param player the Player to operate on
+	 */
 	public void pickupItems(Player player) {
 		Room curRoom = player.getLocation();
 		List<Item> floorItems = curRoom.getFloorItems();
