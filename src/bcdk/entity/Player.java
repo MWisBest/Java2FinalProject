@@ -1,16 +1,24 @@
 package bcdk.entity;
 
-import java.util.HashSet;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
+import java.util.TreeSet;
 
+import bcdk.BCDK;
 import bcdk.item.Inventory;
 import bcdk.map.Checkpoint;
 import bcdk.map.Room;
+import bcdk.savegame.ILoad;
+import bcdk.savegame.ISave;
+import bcdk.savegame.SaveGame;
+import bcdk.savegame.SaveGame.Table;
 
 /*
  * represents the player who will play the game. 
  */
-public class Player extends Entities {
+public class Player extends Entities implements ISave, ILoad {
 
 	private Room location;
 	
@@ -27,7 +35,7 @@ public class Player extends Entities {
 	 */
 	public Player(String name, int health, int extraDmg) {
 		super(name, health, extraDmg); // the derived variables
-		this.checkpointsReached = new HashSet<>();
+		this.checkpointsReached = new TreeSet<>(); // 3.3 - use of a TreeSet
 		this.playerInventory = new Inventory();
 	}
 	
@@ -77,5 +85,27 @@ public class Player extends Entities {
 	 */
 	public Inventory getInventory() {
 		return playerInventory;
+	}
+
+	@Override
+	public void loadFrom(SaveGame sg) {
+		try {
+			Statement stmt = sg.getDBConnection().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + Table.PLAYER_CHECKPOINTS.name() + " WHERE PLAYER_NAME='" + this.getName() + "'");
+			while (rs.next()) {
+				this.addCheckpointReached(new Checkpoint(rs.getString("CHECKPOINT_NAME")));
+			}
+		} catch (SQLException e) {
+			BCDK.logger.error(e);
+		}
+	}
+
+	@Override
+	public void saveTo(SaveGame sg) {
+		sg.insertOrUpdate(Table.PLAYER, "'" + getName() + "'");
+		for (Checkpoint cp : this.checkpointsReached) {
+			sg.insertOrUpdate(Table.CHECKPOINTS, "'" + cp.getName() + "'");
+			sg.insertOrUpdate(Table.PLAYER_CHECKPOINTS, "'" + getName() + "', '" + cp.getName() + "'");
+		}
 	}
 }
