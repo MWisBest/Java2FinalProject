@@ -132,20 +132,18 @@ public class Inventory {
 	 * weapon in
 	 */
 	public void displayWeapons() {
-		System.out.println(messages.getString("display_weapon") + " ");
-		// only runs if statement if player has at least 1 weapon
-		if (!weapons.isEmpty()) {
-			int count = 1;
-			for (Weapon weapon : weapons) { // 3.5 - example of a foreach statement
-				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription() + messages.getString("weapon_info1") + " " + weapon.getDamage() + messages.getString("weapon_info2"));
-				count++;
-			}
-		} else {
-			// player is informed that they do not have any weapons in inventory
-			System.out.println(messages.getString("weapon_null"));
-		}
+        System.out.println("Weapons in inventory: ");
+        // only runs if statement if player has at least 1 weapon
+        if (!weapons.isEmpty()) {
+            weapons.forEach(weapon -> { // 2.1 Lambda  Expression and foreach statement
+                System.out.println(weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
+            });
+        } else {
+            // player is informed that they do not have any weapons in inventory
+            System.out.println("Nothing but your fists.");
+        }
 
-	}
+    }
 
 	/**
 	 * get the array of weapons that player has so he can pick during combat

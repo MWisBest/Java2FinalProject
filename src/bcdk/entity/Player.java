@@ -55,12 +55,7 @@ public class Player extends Entities implements ISave, ILoad {
 	 * @return true if the Player has this Checkpoint, or false if not
 	 */
 	public boolean checkForCheckpoint(Checkpoint checkpoint) {
-		for (Checkpoint cp : this.checkpointsReached) {
-			if (cp.equals(checkpoint)) {
-				return true;
-			}
-		}
-		return false;
+	    return checkpointsReached.stream().anyMatch(cp -> cp.equals(checkpoint));  //2.1 Lambda 
 	}
 
 	/**
