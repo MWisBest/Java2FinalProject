@@ -1,5 +1,7 @@
 package bcdk.item;
 
+import java.util.function.Consumer;
+
 import bcdk.entity.NPCBehavior;
 
 public class Items {
@@ -10,15 +12,15 @@ public class Items {
 													// just says key can unlock XX door
 		public int KeyCount = 0; // Amount of keys
 
-		public void UseKey() {
-			if (KeyCount > 0) {
-				// If room contains door then open that door.
-				System.out.println("You have used the key and unlocked the door");
-				// key is consumed
-				KeyCount--;
-			} else
-				System.out.println("If only you had a key...");
-		}
+		public Runnable UseKey = () -> { //2.1 Lambda
+            if (KeyCount > 0) {
+                // If room contains door then open that door.
+                System.out.println("You have used the key and unlocked the door");
+                // key is consumed
+                KeyCount--;
+            } else
+                System.out.println("If only you had a key...");
+        };
 
 	}
 
@@ -74,12 +76,12 @@ public class Items {
 				System.out.println("You need to find another rock first");
 		}
 
-		public void WhatRocks() {
+		public Runnable WhatRocks=()-> { //2.1 Lambda expression
 			if (RockCount > 0)
 				System.out.println("You have " + RockCount + " more rocks left");
 			else
 				System.out.println("You have no rocks");
-		}
+		};
 	}
 
 	/**
@@ -127,9 +129,9 @@ public class Items {
 		/**
 		 * Tell user about their weapon
 		 */
-		public void WhatWeapon() {
-			System.out.println(WeaponDescription);
-		}
+		public Runnable WhatWeapon = () -> { //2.1 Lambda Expression 
+            System.out.println(WeaponDescription);
+        };
 
 		/**
 		 * 
@@ -184,11 +186,11 @@ public class Items {
 	    }
 
 	    // Method to use the potion and inflict damage to an enemy
-	    public void UsePotion(NPCBehavior guard) {
+	    public Consumer<NPCBehavior> usePotion = (guard) -> {  //2.1 Lambda expression. Also uses variable
 	        System.out.println("You throw the " + PhialName + " at the enemy!");
 	        System.out.println("It inflicts " + damage + " damage to the enemy!");
 	        guard.takeDamage(damage);
-	    }
+	    };
 	}
 
 }

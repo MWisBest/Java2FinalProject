@@ -45,12 +45,7 @@ public class Player extends Entities {
 	}
 	
 	public boolean checkForCheckpoint(Checkpoint checkpoint) {
-		for (Checkpoint cp : this.checkpointsReached) {
-			if (cp.equals(checkpoint)) {
-				return true;
-			}
-		}
-		return false;
+	    return checkpointsReached.stream().anyMatch(cp -> cp.equals(checkpoint));  //2.1 Lambda 
 	}
 
 	/**

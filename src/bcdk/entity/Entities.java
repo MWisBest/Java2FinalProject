@@ -2,6 +2,7 @@ package bcdk.entity;
 
 /**
  * represents basic entity that can be expanded upon depending on entity type
+ * Has a few immutable objects that demonstrate immutable object pattern.
  */
 public class Entities {
 	/**
@@ -17,7 +18,7 @@ public class Entities {
 	/**
 	 * the amount of total damage that this entity can cause
 	 */
-	private int Damage;
+	private CalculateDamage Damage;
 
 	/**
 	 * the amount of extra damage caused by this entity
@@ -42,7 +43,7 @@ public class Entities {
 		this.ExtraDamage = extraDmg;
 
 		// sets total damage of entity
-		this.Damage = BaseDamage + ExtraDamage;
+		this.Damage = () -> BaseDamage + ExtraDamage; //2.1 Lambda 
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class Entities {
 	 * @return - total damage
 	 */
 	public int GetDamage() {
-		return Damage;
+		return Damage.calculateDamage();
 	}
 
 	/**
@@ -90,7 +91,7 @@ public class Entities {
 		ExtraDamage = dmg;
 
 		// automatically update the total damage
-		Damage = BaseDamage + ExtraDamage;
+		this.Damage = () -> BaseDamage + ExtraDamage; //2.1 Lambda
 	}
 
 	/**
@@ -114,4 +115,9 @@ public class Entities {
 	public void AddHealth(int amt) {
 		Health += amt;
 	}
+}
+
+@FunctionalInterface //Used for 2 Lambda expressions in this class 
+interface CalculateDamage {
+    int calculateDamage();
 }

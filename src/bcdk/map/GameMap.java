@@ -24,7 +24,9 @@ public class GameMap {
 	public Room guards = new Room("3E", "You've found the path to the exit!\nA guard has spotted you.", rockThrown);
 	public Room exit = new Room("Exit", "One final guard stands between you and the exit", keyAcquired);
 	
-	
+	public Room a = new Room("1W", "You awaken in a dimly lit spacecraft cabin, disoriented from cryosleep.");
+	public Room b = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
+	public Room c = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
 	public GameMap() {
 		centralNorth.addFloorItem(new Weapon("Axe", "Good handle, Good for quick attacks", 5));
 		centralSouth.addFloorItem(new Weapon("Sword", "A nice, sharp blade. I can definetly use this.", 8));

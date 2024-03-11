@@ -116,20 +116,18 @@ public class Inventory {
 	 * weapon in
 	 */
 	public void displayWeapons() {
-		System.out.println("Weapons in inventory: ");
-		// only runs if statement if player has at least 1 weapon
-		if (!weapons.isEmpty()) {
-			int count = 1;
-			for (Weapon weapon : weapons) {
-				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
-				count++;
-			}
-		} else {
-			// player is informed that they do not have any weapons in inventory
-			System.out.println("Nothing but your fists.");
-		}
+        System.out.println("Weapons in inventory: ");
+        // only runs if statement if player has at least 1 weapon
+        if (!weapons.isEmpty()) {
+            weapons.forEach(weapon -> { // 2.1 Lambda  Expression 
+                System.out.println(weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
+            });
+        } else {
+            // player is informed that they do not have any weapons in inventory
+            System.out.println("Nothing but your fists.");
+        }
 
-	}
+    }
 
 	/**
 	 * counts the amount of weapons that the player has in their inventory

@@ -165,14 +165,16 @@ public class BCDK {
 			Combat fight = new Combat(player, npc, player.getInventory());
 			Entities winner = fight.FightWinner();
 			// determine which entity won the fight based on the winner variable
-			if (winner.GetName().equals(player.GetName())) {
-				System.out.println("Battle ended");
-				winner = null;
-			} else {
-				System.out.println("Player is dead");
-				RUNNING = false;
-			}
-			break;
+			 Runnable printResult = () -> { //2.1 Lambda expression. 4.1 Variable in expression 
+	                if (winner.GetName().equals(player.GetName())) { //2.5 Object Comparison 
+	                    System.out.println("Battle ended");
+	                } else {
+	                    System.out.println("Player is dead");
+	                    RUNNING = false;
+	                }
+	            };
+	            printResult.run();
+	            break;
 		case "SAVE":
 			ret.append("Saving is automatically done when you reach a checkpoint.");
 			break;
