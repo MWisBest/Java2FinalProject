@@ -5,4 +5,8 @@ public enum Direction { // 1.8 - example of enum
 	SOUTH,
 	WEST,
 	EAST,
+	NORTE,
+	SUR,
+	OESTE,
+	ESTE
 }

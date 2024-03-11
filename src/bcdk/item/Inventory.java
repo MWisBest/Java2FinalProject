@@ -2,11 +2,15 @@ package bcdk.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * keep track of all the items that the player owns.
  */
 public class Inventory {
+	static Locale currentLocale = new Locale("en"); // Spanish locale
+    static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 
 	/**
 	 * store the keys that the player has in inventory
@@ -111,7 +115,7 @@ public class Inventory {
 	 * they have in their inventory.
 	 */
 	public void displayKeys() {
-		System.out.println("Keys in inventory: " + keys.size());
+		System.out.println(messages.getString("display_key") + " " + keys.size());
 	}
 
 	/**
@@ -119,7 +123,7 @@ public class Inventory {
 	 * rocks they have in their inventory
 	 */
 	public void displayRocks() {
-		System.out.println("Rocks in inventory: " + rocks.size());
+		System.out.println(messages.getString("display_rock") + " " + rocks.size());
 	}
 
 	/**
@@ -128,17 +132,17 @@ public class Inventory {
 	 * weapon in
 	 */
 	public void displayWeapons() {
-		System.out.println("Weapons in inventory: ");
+		System.out.println(messages.getString("display_weapon") + " ");
 		// only runs if statement if player has at least 1 weapon
 		if (!weapons.isEmpty()) {
 			int count = 1;
 			for (Weapon weapon : weapons) { // 3.5 - example of a foreach statement
-				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
+				System.out.println(count + ": " + weapon.getName() + ": " + weapon.getFullDescription() + messages.getString("weapon_info1") + " " + weapon.getDamage() + messages.getString("weapon_info2"));
 				count++;
 			}
 		} else {
 			// player is informed that they do not have any weapons in inventory
-			System.out.println("Nothing but your fists.");
+			System.out.println(messages.getString("weapon_null"));
 		}
 
 	}
