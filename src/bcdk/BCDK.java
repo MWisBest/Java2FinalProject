@@ -13,6 +13,7 @@ import bcdk.entity.Player;
 import bcdk.item.Inventory;
 import bcdk.map.Direction;
 import bcdk.map.GameMap;
+import bcdk.savegame.SaveGame;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -182,10 +183,8 @@ public class BCDK {
 			}
 			break;
 		case "SAVE":
-			ret.append("Saving is automatically done when you reach a checkpoint.");
-			break;
-		case "LOAD":
-			// TODO: Load saved games, both on command and on game start
+			savegame.save();
+			ret.append("Game saved!");
 			break;
 		case "RESTART":
 			if (input.length == 2 && input[1].equals("PLEASE")) {
@@ -200,6 +199,7 @@ public class BCDK {
 			} else {
 				ret.append("Usage: RESTART PLEASE. Clears your saved data and restarts the game.");
 			}
+			break;
 		default:
 			ret.append("Unknown command: ").append(in);
 			break;
@@ -238,7 +238,7 @@ public class BCDK {
 		// 6.4 - use of try-with-resources block
 		try (Scanner scanner = new Scanner(System.in)) {
 			try {
-				savegame = new SaveGame("bcdk");
+				savegame = SaveGame.getInstance();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				logger.error(e);
@@ -249,6 +249,12 @@ public class BCDK {
 				System.out.println(
 						"Your previous savegame uses an old format that is not compatible with this version, your progress was reset.");
 				logger.warn(e);
+				// re-get the save instance.
+				savegame = SaveGame.getInstance();
+			}
+			if (savegame != null) {
+				savegame.registerLoadable(player);
+				savegame.registerSaveable(player);
 			}
 
 			while (RUNNING) {
