@@ -17,8 +17,8 @@ public class GameMap {
 	static Locale currentLocale = new Locale("en"); // Spanish locale
     static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 	
-	private List<Room> roomList = new ArrayList<>();
 	
+	private HoldList<Room> rooms = new HoldList();
 	// 1.4 - example of final
 	// 1.5 - proper use of static keyword
 	// 2.3 - example of singleton pattern
@@ -28,6 +28,7 @@ public class GameMap {
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
 	
 	private GameMap() {
+		ArrayList<Room> roomList = new ArrayList<>();
 		Room startWest = new Room("1W", messages.getString("start_west"));
 		Room central = new Room("Center", messages.getString("central1")+"\n"+messages.getString("central2"));
 		Room centralNorth = new Room("2N", messages.getString("central_north"));
@@ -54,6 +55,8 @@ public class GameMap {
 		roomList.add(centralSouth);
 		roomList.add(guards);
 		roomList.add(exit);
+		
+		rooms.SetList(roomList);
 	}
 	
 	/**
@@ -67,7 +70,7 @@ public class GameMap {
 	 * @return List of all rooms on the map
 	 */
 	public List<Room> getRoomList() {
-		return roomList;
+		return rooms.GetList();
 	}
 	
 	/**
@@ -77,7 +80,7 @@ public class GameMap {
 	 * @return Room found, or null if no Room was found
 	 */
 	public Room getRoomByName(String name) {
-		for (Room r : roomList) {
+		for (Room r : rooms.GetList()) {
 			if (r.getName().equals(name)) {
 				return r;
 			}
@@ -90,7 +93,7 @@ public class GameMap {
 	 * @return the Room the Player starts in.
 	 */
 	public Room getInitialRoom() {
-		return roomList.get(0);
+		return rooms.GetList().get(0);
 	}
 	
 	/**
