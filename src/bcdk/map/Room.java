@@ -1,6 +1,7 @@
 package bcdk.map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import bcdk.item.Item;
@@ -47,7 +48,15 @@ public class Room {
 	 * @return the List of Item on the floor of this room.
 	 */
 	public List<Item> getFloorItems() {
-		return this.items;
+	    if (this.items != null) {
+	        this.items.forEach((Item item) -> { //2.1 Lambda expression
+	            // Print each item's name
+	            System.out.println(item.getName());
+	        });
+	        return this.items;
+	    } else {
+	        return Collections.emptyList();
+	    }
 	}
 
 	/**
