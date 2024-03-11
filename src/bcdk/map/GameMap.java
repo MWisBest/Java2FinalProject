@@ -13,8 +13,8 @@ import bcdk.item.Weapon;
 
 public class GameMap {
 	
-	private List<Room> roomList = new ArrayList<>();
 	
+	private HoldList<Room> rooms = new HoldList();
 	// 1.4 - example of final
 	// 1.5 - proper use of static keyword
 	// 2.3 - example of singleton pattern
@@ -24,6 +24,7 @@ public class GameMap {
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
 	
 	private GameMap() {
+		ArrayList<Room> roomList = new ArrayList<>();
 		Room startWest = new Room("1W", "You awake in a dark brick building.");
 		Room central = new Room("Center", "There are rocks laying around you.\nTo the east you hear voices.");
 		Room centralNorth = new Room("2N", "You have stumbled into a maintenance closet of some sort.");
@@ -50,6 +51,8 @@ public class GameMap {
 		roomList.add(centralSouth);
 		roomList.add(guards);
 		roomList.add(exit);
+		
+		rooms.SetList(roomList);
 	}
 	
 	/**
@@ -63,7 +66,7 @@ public class GameMap {
 	 * @return List of all rooms on the map
 	 */
 	public List<Room> getRoomList() {
-		return roomList;
+		return rooms.GetList();
 	}
 	
 	/**
@@ -73,7 +76,7 @@ public class GameMap {
 	 * @return Room found, or null if no Room was found
 	 */
 	public Room getRoomByName(String name) {
-		for (Room r : roomList) {
+		for (Room r : rooms.GetList()) {
 			if (r.getName().equals(name)) {
 				return r;
 			}
@@ -86,7 +89,7 @@ public class GameMap {
 	 * @return the Room the Player starts in.
 	 */
 	public Room getInitialRoom() {
-		return roomList.get(0);
+		return rooms.GetList().get(0);
 	}
 	
 	/**
