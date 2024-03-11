@@ -16,6 +16,7 @@ import bcdk.item.Inventory;
 import bcdk.map.Direction;
 import bcdk.map.GameMap;
 import java.util.Locale;
+import bcdk.savegame.SaveGame;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -214,8 +215,9 @@ public class BCDK {
 			break;
 		case "GUARDAR":
 		case "SAVE":
-			ret.append(messages.getString("save_txt"));
-			break;
+		savegame.save();
+		ret.append("Game saved!");
+		break;
 		case "CARGAR":
 		case "LOAD":
 			// TODO: Load saved games, both on command and on game start
