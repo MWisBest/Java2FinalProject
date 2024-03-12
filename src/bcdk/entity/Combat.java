@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import bcdk.BCDK;
 import bcdk.item.Inventory;
 import bcdk.item.Weapon;
 
@@ -11,17 +12,6 @@ import bcdk.item.Weapon;
  * represents the combat area where player will fight an enemy
  */
 public class Combat {
-	/**
-	 * create the chance for the game to be used in spanish
-	 * "es" to play in spanish 		"en" to play in english
-	 */
-	static Locale currentLocale = new Locale("es"); // Spanish locale
-	
-	/**
-	 * create a connection to the files that will be used to provide text to the game
-	 */
-    static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
-	
 	/**
 	 * the player and its stats
 	 */
@@ -73,17 +63,17 @@ public class Combat {
 			Player.ChangeCoolDown();
 
 			if (NPC.getSpecialCharge() == 60) {
-				System.out.println(NPC.getName() + " " + messages.getString("combat_enemy_special"));
+				System.out.println(NPC.getName() + " " + BCDK.messages.getString("combat_enemy_special"));
 			}
 
 			// give player current status of the battle and their available options
-			System.out.println(messages.getString("combat_player_health") + " " + Player.getHealth());
-			System.out.println(messages.getString("combat_enemy_health") + " " + NPC.getHealth());
-			System.out.println(messages.getString("combat_description"));
-			System.out.println(messages.getString("combat_options1") +"\n" 
-							 + messages.getString("combat_options2")+ "\n" 
-							 + messages.getString("combat_options3")+ "\n"
-							 + messages.getString("combat_options4"));
+			System.out.println(BCDK.messages.getString("combat_player_health") + " " + Player.getHealth());
+			System.out.println(BCDK.messages.getString("combat_enemy_health") + " " + NPC.getHealth());
+			System.out.println(BCDK.messages.getString("combat_description"));
+			System.out.println(BCDK.messages.getString("combat_options1") +"\n" 
+							 + BCDK.messages.getString("combat_options2")+ "\n" 
+							 + BCDK.messages.getString("combat_options3")+ "\n"
+							 + BCDK.messages.getString("combat_options4"));
 
 			System.out.print(">");
 			String input = scanner2.nextLine();
@@ -92,7 +82,7 @@ public class Combat {
 			if (input.equalsIgnoreCase("A")) {
 				int playerDmg = Player.GetDamage();
 				NPC.takeDamage(playerDmg);
-				System.out.println(messages.getString("combat_player_attack1") + " " + playerDmg + " " + messages.getString("combat_player_attack2"));
+				System.out.println(BCDK.messages.getString("combat_player_attack1") + " " + playerDmg + " " + BCDK.messages.getString("combat_player_attack2"));
 			}
 			// player defends so enemy does not harm them as much
 			else if (input.equalsIgnoreCase("D")) {
@@ -118,7 +108,7 @@ public class Combat {
 			}
 			// player picks invalid choice so enemy turn is skipped so player can try again
 			else {
-				System.out.println(messages.getString("combat_invalid_input"));
+				System.out.println(BCDK.messages.getString("combat_invalid_input"));
 				SkipEnemyTurn = true;
 			}
 
@@ -150,7 +140,7 @@ public class Combat {
 
 				// health is reduced from the player
 				Player.takeDamage(npcDamage);
-				System.out.println(messages.getString("combat_enemy_attack1") + " " + npcDamage + " " + messages.getString("combat_enemy_attack2") +" .\n\n");
+				System.out.println(BCDK.messages.getString("combat_enemy_attack1") + " " + npcDamage + " " + BCDK.messages.getString("combat_enemy_attack2") +" .\n\n");
 			}
 
 		}
@@ -159,10 +149,10 @@ public class Combat {
 
 		// determines output based on who won the fight
 		if (Player.isAlive()) {
-			System.out.println(NPC.getName() + " " + messages.getString("combat_ending"));
+			System.out.println(NPC.getName() + " " + BCDK.messages.getString("combat_ending"));
 			return Player;
 		} else {
-			System.out.println(Player.getName() + " " + messages.getString("combat_ending"));
+			System.out.println(Player.getName() + " " + BCDK.messages.getString("combat_ending"));
 			return NPC;
 		}
 	}
@@ -178,7 +168,7 @@ public class Combat {
 
 		// only allow weapon change if the player has at least 1 weapon
 		if (Inv.getWeaponCount() > 0) {
-			System.out.println(messages.getString("combat_weapon1"));
+			System.out.println(BCDK.messages.getString("combat_weapon1"));
 			String inputz = scanner.nextLine();
 
 			try {
@@ -189,11 +179,11 @@ public class Combat {
 					Player.setDamage(UserWeapon.getDamage());
 				} else {
 					// inform player when they make an invalid weapon choice
-					System.out.println(messages.getString("combat_weapon2") + " " + max + "\n");
+					System.out.println(BCDK.messages.getString("combat_weapon2") + " " + max + "\n");
 				}
 				// inform player when they make an invalid weapon choice
 			} catch (NumberFormatException e) {
-				System.out.println(messages.getString("combat_weapon3") + "\n");
+				System.out.println(BCDK.messages.getString("combat_weapon3") + "\n");
 			}
 
 		}

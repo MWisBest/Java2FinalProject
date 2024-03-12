@@ -9,17 +9,6 @@ import java.util.ResourceBundle;
  * make welcome message more customizeable
  */
 public class SeasonCalendar {
-	/**
-	 * create the chance for the game to be used in spanish
-	 * "es" to play in spanish 		"en" to play in english
-	 */
-	static Locale currentLocale = new Locale("es"); // Spanish locale
-	
-	/**
-	 * create a connection to the files that will be used to provide text to the game
-	 */
-    static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
-	
     /**
      * declares the seasons that exist
      */
@@ -59,15 +48,15 @@ public class SeasonCalendar {
 	public String getSeasonMessage(Season season) {
         switch (season) {
             case WINTER:
-                return " " + messages.getString("winter");
+                return " " + BCDK.messages.getString("winter");
             case SPRING:
-                return " " + messages.getString("spring");
+                return " " + BCDK.messages.getString("spring");
             case SUMMER:
-                return " " + messages.getString("summer");
+                return " " + BCDK.messages.getString("summer");
             case FALL:
-                return " " + messages.getString("fall");
+                return " " + BCDK.messages.getString("fall");
             default:
-                return " " + messages.getString("season_default");
+                return " " + BCDK.messages.getString("season_default");
         }
 	}
 }
