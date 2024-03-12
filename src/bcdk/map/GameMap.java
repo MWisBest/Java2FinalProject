@@ -29,7 +29,7 @@ public class GameMap {
     /**
      * the list of rooms available in the map
      */
-	private HoldList<Room> rooms = new HoldList();
+	private HoldList<Room> rooms = new HoldList<>();
 	
 	// 1.4 - example of final
 	// 1.5 - proper use of static keyword
