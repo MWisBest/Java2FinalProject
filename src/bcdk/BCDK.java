@@ -15,6 +15,8 @@ import bcdk.entity.Player;
 import bcdk.item.Inventory;
 import bcdk.map.Direction;
 import bcdk.map.GameMap;
+
+import java.util.InputMismatchException;
 import java.util.Locale;
 import bcdk.savegame.SaveGame;
 
@@ -47,15 +49,9 @@ public class BCDK {
 	public static SaveGame savegame = null;
 	
 	/**
-	 * create the chance for the game to be used in spanish
-	 * "es" to play in spanish 		"en" to play in english
-	 */
-	static Locale currentLocale = new Locale("es"); // Spanish locale
-	
-	/**
 	 * create a connection to the files that will be used to provide text to the game
 	 */
-    static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
+    static ResourceBundle messages = null;
 	
 
 	/**
@@ -295,6 +291,39 @@ public class BCDK {
 	 * @throws SQLException
 	 */
 	public static void main(String[] args) throws SQLException {
+		int lang = 0;
+		
+		// If we close System.in, we cannot re-open it.
+		// This will either be taken care of later, by the JVM,
+		// or by our main loop code below's try-with-resources block.
+		@SuppressWarnings("resource")
+		Scanner inTemp = new Scanner(System.in);
+		while (true) {
+			System.out.println("Enter 1 for English. Ingresa 2 para Español.");
+			try {
+				lang = inTemp.nextInt();
+				if (lang == 1 || lang == 2) {
+					break;
+				}
+			} catch (InputMismatchException e) {
+				// will re-print the prompt on the next go-around
+			}
+		}
+		
+		Locale l;
+		
+		switch (lang) {
+			case 1:
+			default:
+				l = new Locale("en");
+				break;
+			case 2:
+				l = new Locale("es");
+				break;
+		}
+		
+		// Create the messages object now that we have a locale.
+		messages = ResourceBundle.getBundle("messages", l);
         
 		System.out.println(messages.getString("welcome_message"));
 
