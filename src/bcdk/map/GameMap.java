@@ -3,6 +3,7 @@ package bcdk.map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import bcdk.BCDK;
@@ -162,8 +163,9 @@ public class GameMap {
 		}
 		
 		Checkpoint roomRequiredCP = nextRoom.getRequiredCheckpoint();
-		
-		if (roomRequiredCP != null) {
+		// use of optional type
+		Optional<Checkpoint> optionalCheckpoint = Optional.ofNullable(roomRequiredCP); 
+		if(!optionalCheckpoint.isEmpty()) {
 			if (!player.checkForCheckpoint(roomRequiredCP)) {
 				System.out.println(messages.getString("move_cp1"));
 				if (roomRequiredCP.equals(rockThrown)) {
