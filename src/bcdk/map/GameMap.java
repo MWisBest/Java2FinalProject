@@ -15,17 +15,6 @@ import bcdk.item.Rock;
 import bcdk.item.Weapon;
 
 public class GameMap {
-	/**
-	 * create the chance for the game to be used in spanish
-	 * "es" to play in spanish 		"en" to play in english
-	 */
-	static Locale currentLocale = new Locale("es"); // Spanish locale
-	
-	/**
-	 * create a connection to the files that will be used to provide text to the game
-	 */
-    static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
-	
     /**
      * the list of rooms available in the map
      */
@@ -52,15 +41,15 @@ public class GameMap {
 	 */
 	private GameMap() {
 		ArrayList<Room> roomList = new ArrayList<>();
-		Room startWest = new Room("1W", messages.getString("start_west"));
-		Room central = new Room("Center", messages.getString("central1")+"\n"+messages.getString("central2"));
-		Room centralNorth = new Room("2N", messages.getString("central_north"));
-		Room centralSouth = new Room("2S", messages.getString("central_south"));
-		Room guards = new Room("3E", messages.getString("guards1")+"\n"+messages.getString("guards2"), rockThrown);
-		Room exit = new Room("Exit", messages.getString("exit"), keyAcquired);
+		Room startWest = new Room("1W", BCDK.messages.getString("start_west"));
+		Room central = new Room("Center", BCDK.messages.getString("central1")+"\n"+BCDK.messages.getString("central2"));
+		Room centralNorth = new Room("2N", BCDK.messages.getString("central_north"));
+		Room centralSouth = new Room("2S", BCDK.messages.getString("central_south"));
+		Room guards = new Room("3E", BCDK.messages.getString("guards1")+"\n"+BCDK.messages.getString("guards2"), rockThrown);
+		Room exit = new Room("Exit", BCDK.messages.getString("exit"), keyAcquired);
 		
-		centralNorth.addFloorItem(new Weapon("Axe", messages.getString("weapon_axe"), 5));
-		centralSouth.addFloorItem(new Weapon("Sword", messages.getString("weapon_sword"), 8));
+		centralNorth.addFloorItem(new Weapon("Axe", BCDK.messages.getString("weapon_axe"), 5));
+		centralSouth.addFloorItem(new Weapon("Sword", BCDK.messages.getString("weapon_sword"), 8));
 		central.addFloorItem(new Rock());
 		central.addFloorItem(new Rock());
 		guards.addFloorItem(new Key());
@@ -158,7 +147,7 @@ public class GameMap {
 		
 		// tells user desired room does not exist
 		if (nextRoom == null) {
-			System.out.println(messages.getString("room_null") + " " + dir.toString() + ".");
+			System.out.println(BCDK.messages.getString("room_null") + " " + dir.toString() + ".");
 			return;
 		}
 		
@@ -167,32 +156,32 @@ public class GameMap {
 		Optional<Checkpoint> optionalCheckpoint = Optional.ofNullable(roomRequiredCP); 
 		if(!optionalCheckpoint.isEmpty()) {
 			if (!player.checkForCheckpoint(roomRequiredCP)) {
-				System.out.println(messages.getString("move_cp1"));
+				System.out.println(BCDK.messages.getString("move_cp1"));
 				if (roomRequiredCP.equals(rockThrown)) {
-					System.out.println(messages.getString("move_cp2"));
-					System.out.println(messages.getString("move_cp3"));
+					System.out.println(BCDK.messages.getString("move_cp2"));
+					System.out.println(BCDK.messages.getString("move_cp3"));
 					return;
 				} else if (roomRequiredCP.equals(keyAcquired)) {
-					System.out.println(messages.getString("move_cp4"));
+					System.out.println(BCDK.messages.getString("move_cp4"));
 					return;
 				}
 			}
 		}
 		
-		System.out.println(messages.getString("move_indication") + " " + dir.toString());
+		System.out.println(BCDK.messages.getString("move_indication") + " " + dir.toString());
 		System.out.println(nextRoom.getEnterDescription());
 		player.setLocation(nextRoom);
 		
 		// fail state: if player goes to a guard and doesn't have a weapon, they die
 		if (nextRoom.equals(getRoomByName("3E")) && player.getInventory().getWeaponCount() == 0) {
-			System.out.println(messages.getString("Guard_Map1"));
+			System.out.println(BCDK.messages.getString("Guard_Map1"));
 			BCDK.RUNNING = false;
 		} else if(nextRoom.equals(getRoomByName("3E"))) { // player had a weapon
-			System.out.println(messages.getString("Guard_Map2"));
-			System.out.println(messages.getString("Guard_Map3"));
+			System.out.println(BCDK.messages.getString("Guard_Map2"));
+			System.out.println(BCDK.messages.getString("Guard_Map3"));
 		} else if(nextRoom.equals(getRoomByName("Exit"))) {
-			System.out.println(messages.getString("Guard_Map4"));
-			System.out.println(messages.getString("Guard_Map5"));
+			System.out.println(BCDK.messages.getString("Guard_Map4"));
+			System.out.println(BCDK.messages.getString("Guard_Map5"));
 			BCDK.RUNNING = false;
 		}
 	}
@@ -212,21 +201,21 @@ public class GameMap {
 				// rock is added to inventory
 				if (i instanceof Rock) {
 					playerInventory.addRocks((Rock)i);
-					System.out.println(messages.getString("map_rock_pickup"));
+					System.out.println(BCDK.messages.getString("map_rock_pickup"));
 					// key is added to inventory
 				} else if (i instanceof Key) {
 					playerInventory.addKey((Key)i);
-					System.out.println(messages.getString("map_key_pickup"));
+					System.out.println(BCDK.messages.getString("map_key_pickup"));
 					player.addCheckpointReached(keyAcquired);
 					// weapon is added to the game
 				} else if (i instanceof Weapon) {
 					playerInventory.addWeapons((Weapon)i);
-					System.out.println(messages.getString("map_weapon_pickup"));
+					System.out.println(BCDK.messages.getString("map_weapon_pickup"));
 				}
 			}
 			floorItems.clear();
 		} else {
-			System.out.println(messages.getString("map_null_pickup"));
+			System.out.println(BCDK.messages.getString("map_null_pickup"));
 		}
 	}
 }

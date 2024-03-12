@@ -51,7 +51,7 @@ public class BCDK {
 	/**
 	 * create a connection to the files that will be used to provide text to the game
 	 */
-    static ResourceBundle messages = null;
+    public static ResourceBundle messages = null;
 	
 
 	/**
