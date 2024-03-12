@@ -1,5 +1,7 @@
 package bcdk.entity;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import bcdk.item.Inventory;
@@ -9,6 +11,17 @@ import bcdk.item.Weapon;
  * represents the combat area where player will fight an enemy
  */
 public class Combat {
+	/**
+	 * create the chance for the game to be used in spanish
+	 * "es" to play in spanish 		"en" to play in english
+	 */
+	static Locale currentLocale = new Locale("es"); // Spanish locale
+	
+	/**
+	 * create a connection to the files that will be used to provide text to the game
+	 */
+    static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
+	
 	/**
 	 * the player and its stats
 	 */
@@ -28,6 +41,8 @@ public class Combat {
 	 * the weapon that the user is currenty using in combat
 	 */
 	private Weapon UserWeapon;
+	
+	
 
 	/**
 	 * class constructor
@@ -49,37 +64,53 @@ public class Combat {
 	 */
 	public Entities FightWinner() {
 		Scanner scanner2 = new Scanner(System.in);
-
+		System.out.println(Player.getName() + " will fight " + NPC.getName());
 		// the fight will go on until either the player or the enemy is dead.
 		while (Player.isAlive() && NPC.isAlive()) {
 
 			boolean Defend = false;// determines if the damage from enemy should be halfed
 			Boolean SkipEnemyTurn = false; // determine if enemy turn should be skipped
+			Player.ChangeCoolDown();
 
 			if (NPC.getSpecialCharge() == 60) {
-				System.out.println(NPC.getName() + " will use special attack on his next turn");
+				System.out.println(NPC.getName() + " " + messages.getString("combat_enemy_special"));
 			}
 
 			// give player current status of the battle and their available options
-			System.out.println("Player health: " + Player.getHealth());
-			System.out.println("Enemy health: " + NPC.getHealth());
-			System.out.println(
-					"Attack will cause max damage to enemy. Defend will only give you half normal enemy damage on his next turn");
-			System.out.println("Enter 'A' to attack  \n" + "Enter 'D' to defend \n" + "Enter 'H' to heal \n"
-					+ "Enter 'I' to check weapons:");
+			System.out.println(messages.getString("combat_player_health") + " " + Player.getHealth());
+			System.out.println(messages.getString("combat_enemy_health") + " " + NPC.getHealth());
+			System.out.println(messages.getString("combat_description"));
+			System.out.println(messages.getString("combat_options1") +"\n" 
+							 + messages.getString("combat_options2")+ "\n" 
+							 + messages.getString("combat_options3")+ "\n"
+							 + messages.getString("combat_options4"));
 
+			System.out.print(">");
 			String input = scanner2.nextLine();
 
 			// player attacks enemy with full damage
 			if (input.equalsIgnoreCase("A")) {
-				int playerDmg = Player.getDamage();
+				int playerDmg = Player.GetDamage();
 				NPC.takeDamage(playerDmg);
-				System.out.println("Player attacks NPC for " + playerDmg + " damage.");
+				System.out.println(messages.getString("combat_player_attack1") + " " + playerDmg + " " + messages.getString("combat_player_attack2"));
 			}
 			// player defends so enemy does not harm them as much
 			else if (input.equalsIgnoreCase("D")) {
 				Defend = true;
 			}
+			// player heals if available
+            else if (input.equalsIgnoreCase("H")) {
+            	if(Player.getHealCoolDown() <= 0) {
+            		Player.setHealAmount();
+            		Player.addHealth(Player.getHealAmount());
+            		System.out.println("Player heals for " + Player.getHealAmount() + " points.");
+            	} else {
+            		System.out.println("Healing is unavailable.");
+            		System.out.println("Cooldown status: " + Player.getHealCoolDown());
+            		SkipEnemyTurn = true;
+            	}
+            } 
+            // player gets to check inventory to change weapon
 			// player gets to check inventory to change weapon
 			else if (input.equalsIgnoreCase("I")) {
 				ChangeWeapon(scanner2);
@@ -87,7 +118,7 @@ public class Combat {
 			}
 			// player picks invalid choice so enemy turn is skipped so player can try again
 			else {
-				System.out.println("Invalid input. Check the list of options");
+				System.out.println(messages.getString("combat_invalid_input"));
 				SkipEnemyTurn = true;
 			}
 
@@ -107,9 +138,9 @@ public class Combat {
 				if (!isSpecialAttack) {
 					// determines the amount of damage to cause to the player
 					if (Defend) {
-						npcDamage = NPC.getDamage() / 2;
+						npcDamage = NPC.GetDamage() / 2;
 					} else {
-						npcDamage = NPC.getDamage();
+						npcDamage = NPC.GetDamage();
 					}
 				} else {
 					if (Defend) {
@@ -119,19 +150,19 @@ public class Combat {
 
 				// health is reduced from the player
 				Player.takeDamage(npcDamage);
-				System.out.println("NPC attacks player for " + npcDamage + " damage.\n\n");
+				System.out.println(messages.getString("combat_enemy_attack1") + " " + npcDamage + " " + messages.getString("combat_enemy_attack2") +" .\n\n");
 			}
 
 		}
 
-		scanner2.close();
+		//scanner2.close();
 
 		// determines output based on who won the fight
 		if (Player.isAlive()) {
-			System.out.println(NPC.getName() + " has been defeated");
+			System.out.println(NPC.getName() + " " + messages.getString("combat_ending"));
 			return Player;
 		} else {
-			System.out.println(Player.getName() + " has been defeated");
+			System.out.println(Player.getName() + " " + messages.getString("combat_ending"));
 			return NPC;
 		}
 	}
@@ -147,7 +178,7 @@ public class Combat {
 
 		// only allow weapon change if the player has at least 1 weapon
 		if (Inv.getWeaponCount() > 0) {
-			System.out.println("Which weapon will you use? (Type number):");
+			System.out.println(messages.getString("combat_weapon1"));
 			String inputz = scanner.nextLine();
 
 			try {
@@ -158,11 +189,11 @@ public class Combat {
 					Player.setDamage(UserWeapon.getDamage());
 				} else {
 					// inform player when they make an invalid weapon choice
-					System.out.println("Please enter a number between 1 and " + max + "\n");
+					System.out.println(messages.getString("combat_weapon2") + " " + max + "\n");
 				}
 				// inform player when they make an invalid weapon choice
 			} catch (NumberFormatException e) {
-				System.out.println("Invalid input. Please enter a valid number.\n");
+				System.out.println(messages.getString("combat_weapon3") + "\n");
 			}
 
 		}

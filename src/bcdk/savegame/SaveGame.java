@@ -12,16 +12,46 @@ import bcdk.BCDK;
 
 // 10.? - JDBC, save game example using SQLite
 public class SaveGame implements AutoCloseable {
+	/**
+	 * declares the name of the database that will be used
+	 */
 	private static String FILENAME = "bcdk";
+	
+	/**
+	 * declares the version of the database that is desired
+	 */
 	private static int VERSION = 3;
+	
+	/**
+	 * the connection to the database
+	 */
 	private Connection dbConnection = null;
+	
+	/**
+	 * the list of items that need to be saved
+	 */
 	private List<ISave> saveableObjects = null;
+	
+	/**
+	 * the list of items that need to be loaded
+	 */
 	private List<ILoad> loadableObjects = null;
 
+	/**
+	 * the current instance of the database
+	 */
 	private static SaveGame INSTANCE = new SaveGame();
+	
+	/**
+	 * determines if database has been initiated yet or not
+	 */
 	private static boolean HAVE_INIT = false;
 
-	private SaveGame() {
+	/**
+	 * class constructor
+	 * creates a connection to the database. 
+	 */
+	public SaveGame() {
 		try {
 			this.dbConnection = DriverManager.getConnection("jdbc:sqlite:" + FILENAME + ".db");
 		} catch (SQLException e) {
@@ -31,6 +61,12 @@ public class SaveGame implements AutoCloseable {
 		this.loadableObjects = new ArrayList<>();
 	}
 
+	/**
+	 * gets the current stance of the database
+	 * @return - instance of database
+	 * @throws SQLException -  error thrown if SQL code has errors
+	 * @throws VersionMismatchException - error thrown if current version does not match the desired version
+	 */
 	public static SaveGame getInstance() throws SQLException, VersionMismatchException {
 		if (!HAVE_INIT) {
 			INSTANCE.init();
@@ -39,21 +75,37 @@ public class SaveGame implements AutoCloseable {
 		return INSTANCE;
 	}
 
+	/**
+	 * detects the data that must be saved
+	 * @param saveable - save helper
+	 */
 	public void registerSaveable(ISave saveable) {
 		this.saveableObjects.add(saveable);
 	}
 
+	/**
+	 * loads data from the database into the game
+	 * @param loadable - load helper
+	 */
 	public void registerLoadable(ILoad loadable) {
 		this.loadableObjects.add(loadable);
 		loadable.loadFrom(this);
 	}
 
+	/**
+	 * Saves the game progress to the database
+	 */
 	public void save() {
 		for (ISave saveable : this.saveableObjects) {
 			saveable.saveTo(this);
 		}
 	}
 
+	/**
+	 * initiate the database to be used within the game
+	 * @throws SQLException - error thrown if SQL code is wrong
+	 * @throws VersionMismatchException - error thrown if the SQLite version used does not match the desired version
+	 */
 	private void init() throws SQLException, VersionMismatchException {
 		Statement stmt = this.dbConnection.createStatement();
 		ResultSet rs = null;
@@ -80,6 +132,10 @@ public class SaveGame implements AutoCloseable {
 		}
 	}
 
+	/**
+	 * create the database to store the information about the game and its resources
+	 * @throws SQLException - error thrown if there is a error in the SQL code
+	 */
 	private void createDB() throws SQLException {
 		deleteSaveData();
 
@@ -96,6 +152,10 @@ public class SaveGame implements AutoCloseable {
 		stmt.close();
 	}
 
+	/**
+	 * override method
+	 * closes the connection to the database
+	 */
 	@Override
 	public void close() throws Exception {
 		this.save();
@@ -110,7 +170,7 @@ public class SaveGame implements AutoCloseable {
 	public void deleteSaveData() throws SQLException {
 		Statement stmt = this.dbConnection.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM sqlite_master WHERE type='table';");
-		List<String> tables = new ArrayList<>();
+		List<String> tables = new ArrayList<>(); // store all the tables found inside the database
 		while (rs.next()) {
 			tables.add(rs.getString("tbl_name"));
 		}
@@ -143,6 +203,7 @@ public class SaveGame implements AutoCloseable {
 			}
 		}
 
+		// create table if it does not exist
 		if (!foundTable) {
 			stmt.execute("CREATE TABLE " + tableName + " (" + tableDesc + ")");
 		}
@@ -150,6 +211,11 @@ public class SaveGame implements AutoCloseable {
 		stmt.close();
 	}
 
+	/**
+	 * initiates or updates database info for certain tables with user specified values
+	 * @param table -  table to update
+	 * @param values - value to insert into a table
+	 */
 	public void insertOrUpdate(Table table, String values) {
 		String tableName = table.name();
 		try {
@@ -181,6 +247,9 @@ public class SaveGame implements AutoCloseable {
 		}
 	}
 
+	/**
+	 * enum with table names from the databse
+	 */
 	public enum Table {
 		DBINFO, PLAYER, CHECKPOINTS, PLAYER_CHECKPOINTS
 	}

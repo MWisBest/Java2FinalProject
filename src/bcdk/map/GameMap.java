@@ -14,19 +14,41 @@ import bcdk.item.Rock;
 import bcdk.item.Weapon;
 
 public class GameMap {
-	static Locale currentLocale = new Locale("en"); // Spanish locale
+	/**
+	 * create the chance for the game to be used in spanish
+	 * "es" to play in spanish 		"en" to play in english
+	 */
+	static Locale currentLocale = new Locale("es"); // Spanish locale
+	
+	/**
+	 * create a connection to the files that will be used to provide text to the game
+	 */
     static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 	
-	
+    /**
+     * the list of rooms available in the map
+     */
 	private HoldList<Room> rooms = new HoldList();
+	
 	// 1.4 - example of final
 	// 1.5 - proper use of static keyword
 	// 2.3 - example of singleton pattern
 	private static final GameMap INSTANCE = new GameMap();
 	
+	/**
+	 * creates a checkpoint where a rock must be used before proceeding
+	 */
 	public Checkpoint rockThrown = new Checkpoint("RockThrow");
+	
+	/**
+	 * creates a checkpoint where the key is needed to proceed
+	 */
 	public Checkpoint keyAcquired = new Checkpoint("KeyAcquired");
 	
+	/**
+	 * class constructor
+	 * initiate all the rooms necessary and add the items needed for the game
+	 */
 	private GameMap() {
 		ArrayList<Room> roomList = new ArrayList<>();
 		Room startWest = new Room("1W", messages.getString("start_west"));
@@ -133,6 +155,7 @@ public class GameMap {
 			break;
 		}
 		
+		// tells user desired room does not exist
 		if (nextRoom == null) {
 			System.out.println(messages.getString("room_null") + " " + dir.toString() + ".");
 			return;
@@ -160,14 +183,14 @@ public class GameMap {
 		
 		// fail state: if player goes to a guard and doesn't have a weapon, they die
 		if (nextRoom.equals(getRoomByName("3E")) && player.getInventory().getWeaponCount() == 0) {
-			System.out.println("You have no weapons to defend yourself from the guard in this room! Game over!");
+			System.out.println(messages.getString("Guard_Map1"));
 			BCDK.RUNNING = false;
 		} else if(nextRoom.equals(getRoomByName("3E"))) { // player had a weapon
-			System.out.println("You use your weapon to defeat the guard in this room to advance further.");
-			System.out.println("The guard you defeated dropped something!");
+			System.out.println(messages.getString("Guard_Map2"));
+			System.out.println(messages.getString("Guard_Map3"));
 		} else if(nextRoom.equals(getRoomByName("Exit"))) {
-			System.out.println("You defeat the final guard with your weapon.");
-			System.out.println("Congratulations, you completed BCDK!");
+			System.out.println(messages.getString("Guard_Map4"));
+			System.out.println(messages.getString("Guard_Map5"));
 			BCDK.RUNNING = false;
 		}
 	}
@@ -184,21 +207,24 @@ public class GameMap {
 			Inventory playerInventory = player.getInventory();
 			// 3.5 - example of foreach statement
 			for (Item i : floorItems) {
+				// rock is added to inventory
 				if (i instanceof Rock) {
 					playerInventory.addRocks((Rock)i);
-					System.out.println("You picked up a rock.");
+					System.out.println(messages.getString("map_rock_pickup"));
+					// key is added to inventory
 				} else if (i instanceof Key) {
 					playerInventory.addKey((Key)i);
-					System.out.println("You picked up a key!");
+					System.out.println(messages.getString("map_key_pickup"));
 					player.addCheckpointReached(keyAcquired);
+					// weapon is added to the game
 				} else if (i instanceof Weapon) {
 					playerInventory.addWeapons((Weapon)i);
-					System.out.println("You acquired a new weapon! Check your INVENTORY for details.");
+					System.out.println(messages.getString("map_weapon_pickup"));
 				}
 			}
 			floorItems.clear();
 		} else {
-			System.out.println("There's nothing on the floor here.");
+			System.out.println(messages.getString("map_null_pickup"));
 		}
 	}
 }

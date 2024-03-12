@@ -43,7 +43,7 @@ public class Entities {
 		this.extraDamage = extraDmg;
 
 		// sets total damage of entity
-		this.Damage = () -> BaseDamage + ExtraDamage; //2.1 Lambda 
+		this.Damage = () -> baseDamage + extraDamage; //2.1 Lambda 
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class Entities {
 		extraDamage = dmg;
 
 		// automatically update the total damage
-		this.Damage = () -> BaseDamage + ExtraDamage; //2.1 Lambda
+		this.Damage = () -> baseDamage + extraDamage; //2.1 Lambda
 	}
 
 	/**
@@ -112,6 +112,11 @@ public class Entities {
 		health -= dmg;
 	}
 
+	/**
+	 * add health to the entity
+	 * 
+	 * @param amt - amount of health to add to the entity
+	 */
 	public void addHealth(int amt) {
 		health += amt;
 	}

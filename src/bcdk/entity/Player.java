@@ -19,11 +19,29 @@ import bcdk.savegame.SaveGame.Table;
  * represents the player who will play the game. 
  */
 public class Player extends Entities implements ISave, ILoad {
-
+	/**
+	 * the cooldown of the heal ability
+	 */
+	private int HealCooldown = 100;
+	
+	/**
+	 * the amount that player can heal
+	 */
+	private int HealAmount;
+	
+	/**
+	 * declares the current room where the player is located
+	 */
 	private Room location;
 	
+	/**
+	 * declares the furthest checkpoint that the player has reached
+	 */
 	private Set<Checkpoint> checkpointsReached;
 	
+	/**
+	 * creates instance of inventory for player to use
+	 */
 	private Inventory playerInventory;
 
 	/**
@@ -82,6 +100,9 @@ public class Player extends Entities implements ISave, ILoad {
 		return playerInventory;
 	}
 
+	/**
+	 * loads data from database about checkpoints
+	 */
 	@Override
 	public void loadFrom(SaveGame sg) {
 		try {
@@ -95,6 +116,9 @@ public class Player extends Entities implements ISave, ILoad {
 		}
 	}
 
+	/**
+	 * saves data to database about checkpoints
+	 */
 	@Override
 	public void saveTo(SaveGame sg) {
 		sg.insertOrUpdate(Table.PLAYER, "'" + getName() + "'");
@@ -103,4 +127,44 @@ public class Player extends Entities implements ISave, ILoad {
 			sg.insertOrUpdate(Table.PLAYER_CHECKPOINTS, "'" + getName() + "', '" + cp.getName() + "'");
 		}
 	}
+	
+	/**
+     * gets the amount of cooldown to go before healing is available
+     * @return cooldown amount
+     */
+    public int getHealCoolDown() {
+    	return HealCooldown;
+    }
+    
+    /**
+     * reduce the amount of cooldown needed before healing becomes available
+     */
+    public void ChangeCoolDown() {
+    	HealCooldown -= 20;
+    }
+    
+    
+    /**
+     * reset cool down back to 0
+     */
+    public void resetCoolDown() {
+    	HealCooldown = 100;
+    }
+    
+    
+    /**
+     * changes the amount of healing that player can do 
+     */
+    public void setHealAmount() {
+    	HealAmount = getHealth() / 3;
+    }
+    
+    
+    /**
+     * gets the amount that the player can heal
+     * @return - heal amunt
+     */
+    public int getHealAmount() {
+    	return HealAmount;
+    }
 }

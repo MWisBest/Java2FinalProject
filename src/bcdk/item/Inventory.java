@@ -9,7 +9,15 @@ import java.util.ResourceBundle;
  * keep track of all the items that the player owns.
  */
 public class Inventory {
-	static Locale currentLocale = new Locale("en"); // Spanish locale
+	/**
+	 * create the chance for the game to be used in spanish
+	 * "es" to play in spanish 		"en" to play in english
+	 */
+	static Locale currentLocale = new Locale("es"); // Spanish locale
+	
+	/**
+	 * create a connection to the files that will be used to provide text to the game
+	 */
     static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 
 	/**
@@ -93,10 +101,16 @@ public class Inventory {
 		// sort not required on remove
 	}
 	
+	/**
+	 * @return - the amount of rocks that the player has, currently
+	 */
 	public int getRockCount() {
 		return this.rocks.size();
 	}
 	
+	/**
+	 * @return - the amount of keys that the player has, currently
+	 */
 	public int getKeyCount() {
 		return this.keys.size();
 	}
@@ -132,15 +146,15 @@ public class Inventory {
 	 * weapon in
 	 */
 	public void displayWeapons() {
-        System.out.println("Weapons in inventory: ");
+        System.out.println(messages.getString("display_weapon") + " ");
         // only runs if statement if player has at least 1 weapon
         if (!weapons.isEmpty()) {
             weapons.forEach(weapon -> { // 2.1 Lambda  Expression and foreach statement
-                System.out.println(weapon.getName() + ": " + weapon.getFullDescription() + ", does " + weapon.getDamage() + " damage.");
+                System.out.println(weapon.getName() + ": " + weapon.getFullDescription() + messages.getString("weapon_info1") + " " + weapon.getDamage()+" "+ messages.getString("weapon_info2"));
             });
         } else {
             // player is informed that they do not have any weapons in inventory
-            System.out.println("Nothing but your fists.");
+            System.out.println(messages.getString("weapon_null"));
         }
 
     }

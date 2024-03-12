@@ -6,15 +6,43 @@ import java.util.List;
 
 import bcdk.item.Item;
 
+/**
+ * Create and customize rooms to allow player to traverse through them
+ */
 public class Room {
+	/**
+	 * declares the room that will be acessable by going north
+	 */
 	private Room north;
+	
+	/**
+	 * declares the room that will be accessable by going south
+	 */
 	private Room south;
+	
+	/**
+	 * declares the room that will be accessable by going west
+	 */
 	private Room west;
+	
+	/**
+	 * declares the room that will be acessable by going east
+	 */
 	private Room east;
 	
+	/**
+	 * declares the name of the room
+	 */
 	private String name;
+	
+	/**
+	 * declares a description for the room 
+	 */
 	private String enterDescription;
 	
+	/**
+	 * declares the checkpoint that is required before moving forward in the game
+	 */
 	private Checkpoint requiredCP;
 	
 	// Don't make a new set unless we need to, rooms will not always have items
@@ -66,6 +94,9 @@ public class Room {
 		return north;
 	}
 
+	/**
+	 * @param north = the room to be declared as the north of the map
+	 */
 	private void setNorth(Room north) {
 		this.north = north;
 	}
@@ -77,6 +108,9 @@ public class Room {
 		return south;
 	}
 
+	/**
+	 * @param south - the room to be declared as the south of the map
+	 */
 	private void setSouth(Room south) {
 		this.south = south;
 	}
@@ -88,6 +122,9 @@ public class Room {
 		return west;
 	}
 
+	/**
+	 * @param west - the room to be declared as the west of the map
+	 */
 	private void setWest(Room west) {
 		this.west = west;
 	}
@@ -99,6 +136,9 @@ public class Room {
 		return east;
 	}
 
+	/**
+	 * @param east - the room to be declared as the east of the map
+	 */
 	private void setEast(Room east) {
 		this.east = east;
 	}

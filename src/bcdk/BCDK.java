@@ -21,13 +21,40 @@ import bcdk.savegame.SaveGame;
 import org.apache.logging.log4j.LogManager;
 
 public class BCDK {
+	/**
+	 * determintes if game is over or not
+	 */
 	public static boolean RUNNING = true;
+	
+	/**
+	 * manage logs
+	 */
 	public static Logger logger = LogManager.getLogger(BCDK.class);
-	static Player player = new Player("Player", 100,0);
+	
+	/**
+	 * creates the player 
+	 */
+	static Player player = new Player("Jon Snow", 100,0);
+	
+	/**
+	 * creates the map for player to traverse
+	 */
 	static GameMap map = GameMap.getInstance();
+	
+	/**
+	 * allows for game data to be saved to database
+	 */
 	public static SaveGame savegame = null;
 	
-	static Locale currentLocale = new Locale("en"); // Spanish locale
+	/**
+	 * create the chance for the game to be used in spanish
+	 * "es" to play in spanish 		"en" to play in english
+	 */
+	static Locale currentLocale = new Locale("es"); // Spanish locale
+	
+	/**
+	 * create a connection to the files that will be used to provide text to the game
+	 */
     static ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 	
 
@@ -40,7 +67,7 @@ public class BCDK {
 	private static String parseInput(String in) {
 		// double-check that the input is all uppercase, and remove any extra whitespace
 		in = in.toUpperCase().strip();
-		logger.debug("Got command: " + in);
+		//logger.debug("Got command: " + in);
 
 		String[] input = in.split(" ");
 
@@ -61,7 +88,19 @@ public class BCDK {
 			break;
 		case "AYUDA":
 		case "HELP":
-			// TODO: Implement help
+			System.out.println(messages.getString("help1"));
+			System.out.println(messages.getString("help2"));
+			System.out.println(messages.getString("help3"));
+			System.out.println(messages.getString("help4"));
+			System.out.println(messages.getString("help5"));
+			System.out.println(messages.getString("help6"));
+			System.out.println(messages.getString("help7"));
+			System.out.println(messages.getString("help8"));
+			System.out.println(messages.getString("help9"));
+			System.out.println(messages.getString("help10"));
+			System.out.println(messages.getString("help11"));
+			System.out.println(messages.getString("help12"));
+			System.out.println(messages.getString("help13"));
 			break;
 		// further examples/ideas
 		case "IR":
@@ -196,33 +235,38 @@ public class BCDK {
 			}
 			break;
 
-		// Combat
+		// Combat 
+		// not implemented into final version of game. not needed
 		case "PELEAR":
 		case "COMBATIR":
 		case "F":
 		case "FIGHT":
-			Enemy npc = new Enemy("Sunday", 100, 0);
+			Enemy npc = new Enemy("Alliser Thorne", 100, 0);
 			Combat fight = new Combat(player, npc, player.getInventory());
 			Entities winner = fight.FightWinner();
 			// determine which entity won the fight based on the winner variable
 			 Runnable printResult = () -> { //2.1 Lambda expression. 4.1 Variable in expression 
-	                if (winner.GetName().equals(player.GetName())) { //2.5 Object Comparison 
-	                    System.out.println("Battle ended");
+	                if (winner.getName().equals(player.getName())) { //2.5 Object Comparison 
+	                    System.out.println(messages.getString("fight_end1"));
 	                } else {
-	                    System.out.println("Player is dead");
+	                    System.out.println(messages.getString("fight_end2"));
 	                    RUNNING = false;
 	                }
 	            };
 	            printResult.run();
 	            break;
+	            // saves game data to the database
+		case "GUARDAR":
 		case "SAVE":
-		savegame.save();
-		ret.append("Game saved!");
+			savegame.save();
+			ret.append(messages.getString("save_verification"));
 		break;
+		// loads the game data from the databse
 		case "CARGAR":
 		case "LOAD":
 			// TODO: Load saved games, both on command and on game start
 			break;
+			//resets player pogress back to the begining
 		case "REINICIAR":
 		case "RESTART":
 			if (input.length == 2 && input[1].equals("PLEASE") || input.length == 2 && input[1].equals("PORFAVOR")) {
@@ -237,6 +281,7 @@ public class BCDK {
 			} else {
 				ret.append(messages.getString("restart2"));
 			}
+			break;
 		default:
 			ret.append(messages.getString("default") + " ").append(in);
 			break;
@@ -244,14 +289,19 @@ public class BCDK {
 		return ret.toString();
 	}
 
-	public static void main(String[] args) {
+	/**
+	 * main method - execute the program
+	 * @param args
+	 * @throws SQLException
+	 */
+	public static void main(String[] args) throws SQLException {
         
 		System.out.println(messages.getString("welcome_message"));
 
 		// Set player initial position.
 		player.setLocation(map.getInitialRoom());
-
-		// TODO: Print some sort of introduction about the game?
+		
+		//initiates and declares time variables necessary
 		SeasonCalendar calendar = new SeasonCalendar();
 		long startTime = System.currentTimeMillis();
 		LocalDate date = LocalDate.now();
@@ -260,6 +310,7 @@ public class BCDK {
 		int minute = time.getMinute();
 		SeasonCalendar.Season currentSeason = calendar.getSeason(date);
 		
+		// determines the greeting for the player based on the time of day
 		String greeting = "";
 		if(hour < 6 || (hour == 6 && minute == 0)) {
 			greeting = messages.getString("greeting_early_morning");
@@ -275,31 +326,35 @@ public class BCDK {
 		greeting += calendar.getSeasonMessage(currentSeason);
 
 		System.out.println(greeting);
+		
+		//game intro 
+		System.out.println(messages.getString("game_intro1"));
+		System.out.println(messages.getString("game_intro2"));
+		System.out.println(messages.getString("game_intro3"));
 
 		// 6.1 - proper use of try-catch blocks
 		// 6.4 - use of try-with-resources block
 		try (Scanner scanner = new Scanner(System.in)) {
 			try {
-				savegame = new SaveGame("bcdk");
-			} catch (SQLException e) {
-				e.printStackTrace();
-				logger.error(e);
-				System.out.println(messages.getString("error_savedata"));
-				savegame = null;
-			// 6.3 - use of custom exception
+				savegame = SaveGame.getInstance();
 			} catch (SaveGame.VersionMismatchException e) {
 				System.out.println(messages.getString("error_datareset"));
 				logger.warn(e);
+			}
+			
+			if (savegame != null) {
+				savegame.registerLoadable(player);
+				savegame.registerSaveable(player);
 			}
 
 			while (RUNNING) {
 				// 8.1 - reading/writing to console
 				System.out.print("> ");
-
+				
 				String input = scanner.nextLine().toUpperCase();
 
 				// Echo received string back. comment out for final build.
-				System.out.println(input);
+				//System.out.println(input);
 
 				String output = parseInput(input);
 				if (!output.isBlank()) {
@@ -310,11 +365,13 @@ public class BCDK {
 			e.printStackTrace();
 			logger.error(e);
 		} finally { // 6.2 - use of finally block
+			//time calculations
 			long endTime = System.currentTimeMillis();
 			long elapsedTime = endTime - startTime;
 			long elapsedMinutes = elapsedTime / 60000;
 			long elapsedSeconds = (elapsedTime % 60000) / 1000;
 			
+			// display data about player session length and good bye message. 
 			System.out.println(messages.getString("session_time_txt") + elapsedMinutes +" "+ messages.getString("minute_txt") + elapsedSeconds +" "+ messages.getString("second_txt"));
 			System.out.println(messages.getString("game_over"));
 			try {
