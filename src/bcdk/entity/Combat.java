@@ -149,9 +149,11 @@ public class Combat {
 
 		// determines output based on who won the fight
 		if (Player.isAlive()) {
+			assert Player.getHealth() > 0;
 			System.out.println(NPC.getName() + " " + BCDK.messages.getString("combat_ending"));
 			return Player;
 		} else {
+			assert NPC.getHealth() > 0;
 			System.out.println(Player.getName() + " " + BCDK.messages.getString("combat_ending"));
 			return NPC;
 		}

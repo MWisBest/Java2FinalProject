@@ -10,6 +10,11 @@ public class Checkpoint implements Comparable<Checkpoint> {
 	private String name;
 	
 	/**
+	 * determine wether checkpoint can be passed though
+	 */
+	public boolean isCompleted = false;
+	
+	/**
 	 * class constructor
 	 * @param name - name given to the checkpoint
 	 */

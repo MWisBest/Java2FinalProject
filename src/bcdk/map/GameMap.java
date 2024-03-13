@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.PropertyResourceBundle;
 
 import bcdk.BCDK;
+import bcdk.entity.Combat;
+import bcdk.entity.Enemy;
+import bcdk.entity.Entities;
 import bcdk.entity.Player;
 import bcdk.item.Inventory;
 import bcdk.item.Item;
@@ -154,14 +158,17 @@ public class GameMap {
 		Checkpoint roomRequiredCP = nextRoom.getRequiredCheckpoint();
 		// use of optional type
 		Optional<Checkpoint> optionalCheckpoint = Optional.ofNullable(roomRequiredCP); 
+		
 		if(!optionalCheckpoint.isEmpty()) {
-			if (!player.checkForCheckpoint(roomRequiredCP)) {
+			System.out.println(optionalCheckpoint);
+			if (player.checkForCheckpoint(roomRequiredCP)) {
+				
 				System.out.println(BCDK.messages.getString("move_cp1"));
-				if (roomRequiredCP.equals(rockThrown)) {
+				if (roomRequiredCP.equals(rockThrown) && rockThrown.isCompleted == false) {
 					System.out.println(BCDK.messages.getString("move_cp2"));
 					System.out.println(BCDK.messages.getString("move_cp3"));
 					return;
-				} else if (roomRequiredCP.equals(keyAcquired)) {
+				} else if (roomRequiredCP.equals(keyAcquired) && keyAcquired.isCompleted == false) {
 					System.out.println(BCDK.messages.getString("move_cp4"));
 					return;
 				}
@@ -177,11 +184,39 @@ public class GameMap {
 			System.out.println(BCDK.messages.getString("Guard_Map1"));
 			BCDK.RUNNING = false;
 		} else if(nextRoom.equals(getRoomByName("3E"))) { // player had a weapon
-			System.out.println(BCDK.messages.getString("Guard_Map2"));
-			System.out.println(BCDK.messages.getString("Guard_Map3"));
+			Enemy npc = new Enemy("Ramsay Bolton", 100, 0);
+			Combat fight = new Combat(player, npc, player.getInventory());
+			Entities winner = fight.FightWinner();
+			// determine which entity won the fight based on the winner variable
+			 Runnable printResult = () -> { //2.1 Lambda expression. 4.1 Variable in expression 
+	                if (winner.getName().equals(player.getName())) { //2.5 Object Comparison 
+	                    System.out.println(BCDK.messages.getString("fight_end1"));
+	                    System.out.println(BCDK.messages.getString("Guard_Map3"));
+	                } else {
+	                    System.out.println(BCDK.messages.getString("fight_end2"));
+	                    BCDK.RUNNING = false;
+	                }
+	         };
+	         printResult.run();
+			//System.out.println(BCDK.messages.getString("Guard_Map2"));
+			
 		} else if(nextRoom.equals(getRoomByName("Exit"))) {
 			System.out.println(BCDK.messages.getString("Guard_Map4"));
-			System.out.println(BCDK.messages.getString("Guard_Map5"));
+			Enemy npc = new Enemy("Roose Bolton", 100, 0);
+			Combat fight = new Combat(player, npc, player.getInventory());
+			Entities winner = fight.FightWinner();
+			// determine which entity won the fight based on the winner variable
+			 Runnable printResult = () -> { //2.1 Lambda expression. 4.1 Variable in expression 
+	                if (winner.getName().equals(player.getName())) { //2.5 Object Comparison 
+	                    System.out.println(BCDK.messages.getString("fight_end1"));
+	                    System.out.println(BCDK.messages.getString("Guard_Map5"));
+	                } else {
+	                    System.out.println(BCDK.messages.getString("fight_end2"));
+	                    BCDK.RUNNING = false;
+	                }
+	         };
+	         printResult.run();
+			
 			BCDK.RUNNING = false;
 		}
 	}
@@ -207,6 +242,7 @@ public class GameMap {
 					playerInventory.addKey((Key)i);
 					System.out.println(BCDK.messages.getString("map_key_pickup"));
 					player.addCheckpointReached(keyAcquired);
+					keyAcquired.isCompleted = true;
 					// weapon is added to the game
 				} else if (i instanceof Weapon) {
 					playerInventory.addWeapons((Weapon)i);

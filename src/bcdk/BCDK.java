@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.PropertyResourceBundle;
 
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +30,11 @@ public class BCDK {
 	public static boolean RUNNING = true;
 	
 	/**
+	 * create a connection to the files that will be used to provide text to the game
+	 */
+    public static ResourceBundle messages = null;
+	
+	/**
 	 * manage logs
 	 */
 	public static Logger logger = LogManager.getLogger(BCDK.class);
@@ -41,17 +47,14 @@ public class BCDK {
 	/**
 	 * creates the map for player to traverse
 	 */
-	static GameMap map = GameMap.getInstance();
+	//static GameMap map = GameMap.getInstance();
 	
 	/**
 	 * allows for game data to be saved to database
 	 */
 	public static SaveGame savegame = null;
 	
-	/**
-	 * create a connection to the files that will be used to provide text to the game
-	 */
-    public static ResourceBundle messages = null;
+	
 	
 
 	/**
@@ -60,7 +63,7 @@ public class BCDK {
 	 * @param in User input from console, GUI, whatever.
 	 * @return String to display to the user as a result of the command.
 	 */
-	private static String parseInput(String in) {
+	private static String parseInput(String in, GameMap map) {
 		// double-check that the input is all uppercase, and remove any extra whitespace
 		in = in.toUpperCase().strip();
 		//logger.debug("Got command: " + in);
@@ -164,6 +167,7 @@ public class BCDK {
 					if (player.getLocation().equals(map.getRoomByName("Exit"))) {
 						System.out.println(messages.getString("key_use1"));
 						System.out.println(messages.getString("key_use2"));
+						//map.keyAcquired.isCompleted = true;
 						break;
 					} else {
 						System.out.println(messages.getString("key_use3"));
@@ -173,7 +177,7 @@ public class BCDK {
 				case "ROCAS":
 				case "ROCK":
 				case "ROCKS":
-					if (player.checkForCheckpoint(map.rockThrown)) {
+					if (!player.checkForCheckpoint(map.rockThrown)) {
 						System.out.println(messages.getString("rock_use1"));
 						break;
 					}
@@ -184,6 +188,7 @@ public class BCDK {
 							System.out.println(messages.getString("rock_use21"));
 							System.out.println(messages.getString("rock_use22"));
 							System.out.println(messages.getString("rock_use23"));
+							map.rockThrown.isCompleted = true;
 						} else {
 							System.out.println(messages.getString("rock_use3"));
 						}
@@ -248,9 +253,9 @@ public class BCDK {
 	                    System.out.println(messages.getString("fight_end2"));
 	                    RUNNING = false;
 	                }
-	            };
-	            printResult.run();
-	            break;
+	         };
+	         printResult.run();
+	         break;
 	            // saves game data to the database
 		case "GUARDAR":
 		case "SAVE":
@@ -326,6 +331,8 @@ public class BCDK {
 		messages = ResourceBundle.getBundle("messages", l);
         
 		System.out.println(messages.getString("welcome_message"));
+		
+		GameMap map = GameMap.getInstance();
 
 		// Set player initial position.
 		player.setLocation(map.getInitialRoom());
@@ -385,7 +392,7 @@ public class BCDK {
 				// Echo received string back. comment out for final build.
 				//System.out.println(input);
 
-				String output = parseInput(input);
+				String output = parseInput(input, map);
 				if (!output.isBlank()) {
 					System.out.println(output);
 				}
